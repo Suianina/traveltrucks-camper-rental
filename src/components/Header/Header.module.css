@@ -1,0 +1,46 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  border-bottom: 1px solid #ececec;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.logo {
+  text-decoration: none;
+  color: #101828;
+  font-weight: 600;
+  font-size: 20px;
+}
+.logoBold {
+  font-weight: 800;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.link {
+  color: #667085;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: #101828;
+}
+
+.active {
+  color: #e44848;
+}
