@@ -1,0 +1,45 @@
+.box {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+.title {
+  margin: 0 0 6px;
+}
+.sub {
+  margin: 0 0 16px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.btn {
+  margin-top: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: #e44848;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #d84343;
+}
+.err {
+  color: #e44848;
+  font-size: 12px;
+}

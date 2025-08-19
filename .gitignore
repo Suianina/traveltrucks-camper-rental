@@ -15,10 +15,12 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 .idea
+.env
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.stackdump
 *.stackdump

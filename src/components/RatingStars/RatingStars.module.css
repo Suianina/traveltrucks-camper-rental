@@ -1,0 +1,22 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+
+  --size: 16px;
+  --filled: #ffc531;
+  --empty: #e5e7eb;
+}
+
+.star {
+  font-size: var(--size);
+  transition: color 0.15s ease;
+}
+
+.filled {
+  color: var(--filled);
+}
+.empty {
+  color: var(--empty);
+}

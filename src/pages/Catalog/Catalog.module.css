@@ -1,0 +1,58 @@
+.main {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 88px; /* під хедер */
+  align-self: start;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+.sidebarTitle {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+.hint {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.content {
+  min-height: 200px;
+}
+
+.loadMore {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #e44848;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.loadMore:hover {
+  background: #d84343;
+}
+
+.loading {
+  margin-top: 12px;
+  color: #667085;
+}
+.empty {
+  margin-top: 12px;
+  color: #98a2b3;
+}
+.error {
+  margin-top: 12px;
+  color: #e44848;
+}
