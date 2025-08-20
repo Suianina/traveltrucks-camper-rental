@@ -5,16 +5,17 @@ import axios from "axios";
 import styles from "./CamperDetails.module.css";
 import BookForm from "../../components/BookForm/BookForm";
 import RatingStars from "../../components/RatingStars/RatingStars";
+import Icon from "../../components/Icon/Icon";
 
 const API =
-  import.meta.env.VITE_API_URL ?? "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
+  import.meta.env.VITE_API_URL || "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
 
-const formatPrice = (n) => (n != null ? `€${Number(n).toFixed(2)}` : "—");
+const formatPrice = (n) => (n != null ? `${Number(n).toFixed(2)}` : "—");
 
 export default function CamperDetails() {
   const { id } = useParams();
   const [camper, setCamper] = useState(null);
-  const [tab, setTab] = useState("features"); // "features" | "reviews"
+  const [tab, setTab] = useState("features");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -83,6 +84,12 @@ export default function CamperDetails() {
         )}
         {camper.location && (
           <span className={styles.metaItem}>
+            <Icon
+              name="icon-bi_grid-3x3-gap"
+              size={16}
+              color="#667085"
+              className="icon"
+            />
             <span className={styles.metaText}>{camper.location}</span>
           </span>
         )}
@@ -113,7 +120,9 @@ export default function CamperDetails() {
             tab === "features" ? styles.active : ""
           }`}
           onClick={() => setTab("features")}
-        ></button>
+        >
+          Features
+        </button>
         <button
           type="button"
           role="tab"
@@ -122,7 +131,9 @@ export default function CamperDetails() {
             tab === "reviews" ? styles.active : ""
           }`}
           onClick={() => setTab("reviews")}
-        ></button>
+        >
+          Reviews
+        </button>
       </div>
 
       <div className={styles.grid}>
@@ -143,37 +154,58 @@ export default function CamperDetails() {
 }
 
 function Features({ camper }) {
-  const chips = [
-    ["transmission", camper.transmission],
-    ["engine", camper.engine],
-    ["AC", camper.AC && "AC"],
-    ["bathroom", camper.bathroom && "Bathroom"],
-    ["kitchen", camper.kitchen && "Kitchen"],
-    ["TV", camper.TV && "TV"],
-    ["radio", camper.radio && "Radio"],
-    ["refrigerator", camper.refrigerator && "Refrigerator"],
-    ["microwave", camper.microwave && "Microwave"],
-    ["gas", camper.gas && "Gas"],
-    ["water", camper.water && "Water"],
-  ].filter(([, v]) => v);
-
-  const details = [
-    ["Form", camper.form],
-    ["Length", camper.length ? `${camper.length} m` : null],
-    ["Width", camper.width ? `${camper.width} m` : null],
-    ["Height", camper.height ? `${camper.height} m` : null],
-    ["Tank", camper.tank ? `${camper.tank} l` : null],
-    [
-      "Consumption",
-      camper.consumption ? `${camper.consumption} l/100km` : null,
-    ],
-  ].filter(([, v]) => v);
+  const items = [
+    camper.transmission && {
+      key: "transmission",
+      label: `Transmission: ${camper.transmission}`,
+      name: "icon-bi_grid",
+    },
+    camper.engine && {
+      key: "engine",
+      label: `Engine: ${camper.engine}`,
+      name: "icon-diagram",
+    },
+    camper.AC && { key: "AC", label: "AC", name: "icon-wind" },
+    camper.bathroom && {
+      key: "bathroom",
+      label: "Bathroom",
+      name: "icon-ph_shower",
+    },
+    camper.kitchen && {
+      key: "kitchen",
+      label: "Kitchen",
+      name: "icon-cup-hot",
+    },
+    camper.TV && { key: "TV", label: "TV", name: "icon-tv" },
+    camper.radio && { key: "radio", label: "Radio", name: "icon-bi_grid-1x2" },
+    camper.refrigerator && {
+      key: "refrigerator",
+      label: "Refrigerator",
+      name: "icon-solar_fridge-outline",
+    },
+    camper.microwave && {
+      key: "microwave",
+      label: "Microwave",
+      name: "icon-lucide_microwave",
+    },
+    camper.gas && {
+      key: "gas",
+      label: "Gas",
+      name: "icon-hugeicons_gas-stove",
+    },
+    camper.water && {
+      key: "water",
+      label: "Water",
+      name: "icon-ion_water-outline",
+    },
+  ].filter(Boolean);
 
   return (
     <>
       <div className={styles.featureChips}>
-        {chips.map(([key, label]) => (
+        {items.map(({ key, label, name }) => (
           <span key={key} className={styles.chip}>
+            <Icon name={name} size={16} color="#667085" className="icon" />
             {label}
           </span>
         ))}
@@ -181,12 +213,24 @@ function Features({ camper }) {
 
       <h3 className={styles.subTitle}>Vehicle details</h3>
       <dl className={styles.detailsList}>
-        {details.map(([k, v]) => (
-          <div key={k} className={styles.dlRow}>
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
-        ))}
+        {[
+          ["Form", camper.form],
+          ["Length", camper.length ? `${camper.length} m` : null],
+          ["Width", camper.width ? `${camper.width} m` : null],
+          ["Height", camper.height ? `${camper.height} m` : null],
+          ["Tank", camper.tank ? `${camper.tank} l` : null],
+          [
+            "Consumption",
+            camper.consumption ? `${camper.consumption} l/100km` : null,
+          ],
+        ]
+          .filter(([, v]) => v)
+          .map(([k, v]) => (
+            <div key={k} className={styles.dlRow}>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
       </dl>
     </>
   );

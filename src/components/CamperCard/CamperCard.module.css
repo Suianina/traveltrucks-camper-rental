@@ -27,9 +27,20 @@
   gap: 12px;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .name {
   margin: 0;
   font-size: 18px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.price {
   font-weight: 700;
   color: #101828;
 }
@@ -41,13 +52,13 @@
   border-radius: 999px;
   width: 36px;
   height: 36px;
-  line-height: 34px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   color: #667085;
 }
 .favActive {
-  color: #e44848;
   border-color: #e44848;
 }
 
@@ -55,6 +66,13 @@
   margin: 6px 0 10px;
   color: #667085;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.locIcon {
+  color: #667085;
 }
 
 .chips {
@@ -70,6 +88,9 @@
   font-size: 12px;
   color: #101828;
   background: #f9fafb;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .moreBtn {

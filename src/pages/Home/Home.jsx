@@ -11,6 +11,14 @@ const Home = () => {
           name="description"
           content="Browse our catalog of campers and rent your perfect campervan with TravelTrucks."
         />
+        <meta property="og:title" content="TravelTrucks — Camper rental" />
+        <meta
+          property="og:description"
+          content="Find and rent your perfect campervan."
+        />
+        <meta property="og:image" content="/img/og-cover.jpg" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <section className={styles.hero} aria-labelledby="home-title">

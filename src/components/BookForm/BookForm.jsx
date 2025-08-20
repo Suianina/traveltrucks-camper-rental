@@ -24,7 +24,6 @@ export default function BookForm({ camperName }) {
         initialValues={initial}
         validationSchema={schema}
         onSubmit={(vals, { resetForm }) => {
-          // тут імітуємо успішне бронювання
           toast.success("Booking submitted!");
           console.log("Booking:", { camperName, ...vals });
           resetForm();

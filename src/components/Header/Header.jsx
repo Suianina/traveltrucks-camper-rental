@@ -8,8 +8,12 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link to="/" className={styles.logo}>
-          <span className={styles.logoBold}>Travel</span>Trucks
+        <Link to="/" className={styles.logo} aria-label="TravelTrucks home">
+          <img
+            src="/img/Logo.svg"
+            alt="TravelTrucks"
+            className={styles.logoImg}
+          />
         </Link>
 
         <nav className={styles.nav}>

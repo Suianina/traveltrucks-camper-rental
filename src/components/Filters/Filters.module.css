@@ -1,0 +1,48 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: #475467;
+}
+.withIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+.radioGroup,
+.checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+.radioItem,
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.actions {
+  margin-top: 8px;
+}
+.btn {
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #e7e7f0;
+  border: 1px solid #d1d5db;
+}

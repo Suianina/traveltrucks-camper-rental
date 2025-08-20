@@ -10,7 +10,11 @@
   border-radius: 12px;
   overflow: hidden;
 
-  background: #000 url("/hero.jpg") center/cover no-repeat;
+  background-color: #000;
+  background-image: url("/img/Picture-2x.webp"), url("/img/Picture-2x.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   display: grid;
   align-items: end;

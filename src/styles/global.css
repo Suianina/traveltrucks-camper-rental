@@ -21,3 +21,11 @@ img {
   display: block;
   max-width: 100%;
 }
+.icon {
+  color: currentColor;
+  --color1: currentColor;
+  --color2: currentColor;
+  --color3: currentColor;
+  --color4: currentColor;
+  --color5: currentColor;
+}

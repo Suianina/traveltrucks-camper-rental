@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../redux/favoritesSlice";
 import cn from "classnames";
 import s from "./CamperCard.module.css";
+import Icon from "../Icon/Icon";
+
+const formatPrice = (n) => `${Number(n).toFixed(2)}`;
 
 const CamperCard = ({ camper }) => {
   const dispatch = useDispatch();
@@ -16,24 +19,71 @@ const CamperCard = ({ camper }) => {
         <div className={s.top}>
           <h3 className={s.name}>{camper.name}</h3>
 
-          <button
-            type="button"
-            aria-label="favorite"
-            aria-pressed={isFav}
-            onClick={() => dispatch(toggleFavorite(camper.id))}
-            className={cn(s.fav, isFav && s.favActive)}
-          >
-            {isFav ? "♥" : "♡"}
-          </button>
+          <div className={s.right}>
+            {camper.price != null && (
+              <span className={s.price}>{formatPrice(camper.price)}</span>
+            )}
+
+            <button
+              type="button"
+              aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+              aria-pressed={isFav}
+              onClick={() => dispatch(toggleFavorite(camper.id))}
+              className={cn(s.fav, isFav && s.favActive)}
+              title={isFav ? "Remove from favorites" : "Add to favorites"}
+            >
+              <Icon
+                name="heart"
+                className="icon"
+                size={18}
+                style={
+                  isFav
+                    ? { "--color2": "#e44848", "--color3": "#e44848" }
+                    : { "--color2": "#667085", "--color3": "#e5e7eb" }
+                }
+              />
+            </button>
+          </div>
         </div>
 
-        <p className={s.location}>{camper.location}</p>
+        {camper.location && (
+          <p className={s.location}>
+            <Icon
+              name="bi_grid-3x3-gap"
+              className={`icon ${s.locIcon}`}
+              size={16}
+              style={{ "--color1": "#667085" }}
+            />
+            {camper.location}
+          </p>
+        )}
 
         <div className={s.chips}>
-          {camper.AC && <span className={s.chip}>AC</span>}
-          {camper.kitchen && <span className={s.chip}>Kitchen</span>}
-          {camper.bathroom && <span className={s.chip}>Bathroom</span>}
+          {camper.AC && (
+            <span className={s.chip}>
+              <Icon
+                name="wind"
+                className="icon"
+                size={16}
+                style={{ "--color1": "#667085" }}
+              />
+              AC
+            </span>
+          )}
+          {camper.kitchen && (
+            <span className={s.chip}>
+              <Icon name="cup-hot" className="icon" size={16} />
+              Kitchen
+            </span>
+          )}
+          {camper.bathroom && (
+            <span className={s.chip}>
+              <Icon name="ph_shower" className="icon" size={16} />
+              Bathroom
+            </span>
+          )}
         </div>
+
         <a
           href={`/catalog/${camper.id}`}
           target="_blank"

@@ -17,13 +17,12 @@
 }
 
 .logo {
-  text-decoration: none;
-  color: #101828;
-  font-weight: 600;
-  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
 }
-.logoBold {
-  font-weight: 800;
+.logoImg {
+  display: block;
+  height: 28px;
 }
 
 .nav {

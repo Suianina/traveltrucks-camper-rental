@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCampers, resetCampers } from "../../redux/campersSlice";
 import CamperCard from "../../components/CamperCard/CamperCard";
 import s from "./Catalog.module.css";
+import Filters from "../../components/Filters/Filters";
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const Catalog = () => {
   useEffect(() => {
     dispatch(resetCampers());
     dispatch(fetchCampers({ page: 1, limit, filters }));
-  }, [dispatch, filters, limit]);
+  }, [dispatch, filters]);
 
   const loadMore = () =>
     dispatch(fetchCampers({ page: page + 1, limit, filters }));
@@ -31,10 +32,7 @@ const Catalog = () => {
       </Helmet>
 
       <aside className={s.sidebar}>
-        <h3 className={s.sidebarTitle}>Filters</h3>
-        <p className={s.hint}>
-          Location: <strong>{filters.location || "Any"}</strong>
-        </p>
+        <Filters />
       </aside>
 
       <section className={s.content}>
