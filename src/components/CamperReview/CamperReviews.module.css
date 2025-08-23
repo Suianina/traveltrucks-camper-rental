@@ -1,0 +1,20 @@
+/* src/components/CamperReviews/CamperReviews.module.css */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  list-style: none;
+}
+
+.empty {
+  font-size: var(--font-size-base);
+  color: var(--gray);
+  font-family: var(--font-family);
+  text-align: center;
+  margin: var(--gap-md) 0;
+}

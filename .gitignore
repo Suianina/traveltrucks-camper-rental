@@ -12,10 +12,11 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Editor
 .vscode/*
 .idea
-.env
+
+# OS / misc
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,4 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 *.stackdump
-*.stackdump
+
+# Env
+.env
+.env.*
+

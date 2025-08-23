@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLocation,
@@ -6,7 +6,8 @@ import {
   toggleEquipment,
   resetFilters,
 } from "../../redux/filtersSlice";
-import styles from "./Filters.module.css";
+import Button from "../Button/Button";
+import s from "./Filters.module.css";
 
 const bodyTypes = [
   { value: "panelTruck", label: "Panel Truck" },
@@ -14,23 +15,35 @@ const bodyTypes = [
   { value: "alcove", label: "Alcove" },
 ];
 
-export default function Filters() {
+const EQUIPMENT_LABELS = {
+  AC: "AC",
+  kitchen: "Kitchen",
+  bathroom: "Bathroom",
+  TV: "TV",
+  radio: "Radio",
+  refrigerator: "Refrigerator",
+  microwave: "Microwave",
+  gas: "Gas",
+  water: "Water",
+};
+
+export default function Filters({ onSearch }) {
   const dispatch = useDispatch();
   const filters = useSelector((s) => s.filters);
 
-  const [locationInput, setLocationInput] = useState(filters.location || "");
+  // локальний інпут для локації + дебаунс
+  const [locationInput, setLocationInput] = useState(filters.location ?? "");
+  useEffect(() => setLocationInput(filters.location ?? ""), [filters.location]);
 
   useEffect(() => {
-    setLocationInput(filters.location || "");
-  }, [filters.location]);
-
-  useEffect(() => {
-    const id = setTimeout(
-      () => dispatch(setLocation(locationInput.trim())),
-      300
-    );
+    const id = setTimeout(() => {
+      const v = locationInput.trim();
+      // не диспатчимо зайвий раз, щоб уникнути цикл/миготіння
+      if (v !== (filters.location ?? "")) dispatch(setLocation(v));
+    }, 300);
     return () => clearTimeout(id);
-  }, [locationInput, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationInput, dispatch]); // не додаємо filters.location, щоб не зациклити
 
   const onBodyTypeChange = useCallback(
     (e) => {
@@ -45,26 +58,72 @@ export default function Filters() {
     [dispatch]
   );
 
-  return (
-    <div className={styles.box}>
-      <h3 className={styles.title}>Filters</h3>
+  const equipmentEntries = useMemo(() => {
+    const keys = Object.keys(filters.equipment || {});
+    const desiredOrder = [
+      "AC",
+      "kitchen",
+      "bathroom",
+      "TV",
+      "radio",
+      "refrigerator",
+      "microwave",
+      "gas",
+      "water",
+    ];
+    const sorted = [
+      ...desiredOrder.filter((k) => keys.includes(k)),
+      ...keys.filter((k) => !desiredOrder.includes(k)),
+    ];
+    return sorted.map((k) => ({
+      key: k,
+      label: EQUIPMENT_LABELS[k] || k,
+      checked: !!filters.equipment[k],
+    }));
+  }, [filters.equipment]);
 
-      <label className={styles.block}>
-        <span className={styles.label}>Location</span>
+  const handleSearch = useCallback(() => {
+    if (typeof onSearch === "function") onSearch();
+  }, [onSearch]);
+
+  const handleReset = useCallback(() => {
+    dispatch(resetFilters());
+    // одразу перезавантажимо список, щоб відразу побачити повний каталог
+    if (typeof onSearch === "function") onSearch();
+  }, [dispatch, onSearch]);
+
+  return (
+    <section className={s.box} aria-labelledby="filters-title">
+      <h3 id="filters-title" className={s.title}>
+        Filters
+      </h3>
+
+      {/* Location */}
+      <div className={s.block}>
+        <label className={s.label} htmlFor="flt-location">
+          Location
+        </label>
         <input
-          className={styles.input}
+          id="flt-location"
+          className={s.input}
           type="text"
           placeholder="City or region"
           value={locationInput}
           onChange={(e) => setLocationInput(e.target.value)}
+          autoComplete="address-level2"
         />
-      </label>
+      </div>
 
-      <div className={styles.block} role="radiogroup" aria-label="Vehicle type">
-        <span className={styles.label}>Vehicle type</span>
-        <div className={styles.radioGroup}>
+      {/* Vehicle type */}
+      <fieldset className={s.block}>
+        <legend className={s.label}>Vehicle type</legend>
+        <div
+          className={s.radioGroup}
+          role="radiogroup"
+          aria-label="Vehicle type"
+        >
           {bodyTypes.map((t) => (
-            <label key={t.value} className={styles.radioItem}>
+            <label key={t.value} className={s.radioItem}>
               <input
                 type="radio"
                 name="bodyType"
@@ -75,7 +134,7 @@ export default function Filters() {
               <span>{t.label}</span>
             </label>
           ))}
-          <label className={styles.radioItem}>
+          <label className={s.radioItem}>
             <input
               type="radio"
               name="bodyType"
@@ -86,33 +145,34 @@ export default function Filters() {
             <span>Any</span>
           </label>
         </div>
-      </div>
+      </fieldset>
 
-      <div className={styles.block} aria-label="Vehicle equipment">
-        <span className={styles.label}>Vehicle equipment</span>
-        <div className={styles.checks}>
-          {Object.keys(filters.equipment).map((k) => (
-            <label key={k} className={styles.checkItem}>
+      {/* Vehicle equipment */}
+      <fieldset className={s.block}>
+        <legend className={s.label}>Vehicle equipment</legend>
+        <div className={s.checks} aria-label="Vehicle equipment">
+          {equipmentEntries.map(({ key, label, checked }) => (
+            <label key={key} className={s.checkItem}>
               <input
                 type="checkbox"
-                checked={!!filters.equipment[k]}
-                onChange={onToggle(k)}
+                checked={checked}
+                onChange={onToggle(key)}
               />
-              <span>{k}</span>
+              <span>{label}</span>
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.btn}
-          onClick={() => dispatch(resetFilters())}
-        >
+      {/* Actions */}
+      <div className={s.actions}>
+        <Button variant="outline" size="md" onClick={handleReset}>
           Reset
-        </button>
+        </Button>
+        <Button variant="primary" size="md" onClick={handleSearch}>
+          Search
+        </Button>
       </div>
-    </div>
+    </section>
   );
 }

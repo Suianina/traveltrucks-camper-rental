@@ -1,0 +1,14 @@
+.progress {
+  position: fixed;
+  left: 0;
+  top: var(--progress-top, 0);
+  height: 4px;
+  background: #e44848; /* червоний з макету */
+  z-index: 9999; /* поверх хедера за замовчуванням */
+  transition: width 0.2s ease-out;
+}
+
+/* Якщо треба смугу під sticky-хедером (у неї z-index: 50) */
+.underHeader {
+  z-index: 40;
+}

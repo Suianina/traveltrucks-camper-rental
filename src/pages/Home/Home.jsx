@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import styles from "./Home.module.css";
+import Button from "../../components/Button/Button";
+import Container from "../../components/Container/Container";
+import s from "./Home.module.css";
 
-const Home = () => {
+export default function Home() {
   return (
-    <main className={styles.main}>
+    <Container as="main" className={s.main}>
       <Helmet>
         <title>TravelTrucks — Home</title>
         <meta
           name="description"
-          content="Browse our catalog of campers and rent your perfect campervan with TravelTrucks."
+          content="Campers of your dreams. You can find everything you want in our catalog."
         />
         <meta property="og:title" content="TravelTrucks — Camper rental" />
         <meta
@@ -21,21 +22,26 @@ const Home = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <section className={styles.hero} aria-labelledby="home-title">
-        <div className={styles.overlay}>
-          <h1 id="home-title" className={styles.title}>
+      <section className={s.hero} aria-labelledby="home-title">
+        <div className={s.overlay}>
+          <h1 id="home-title" className={s.title}>
             Campers of your dreams
           </h1>
-          <p className={styles.subtitle}>
+          <p className={s.subtitle}>
             You can find everything you want in our catalog
           </p>
-          <Link to="/catalog" className={styles.cta} aria-label="Open catalog">
+          <Button
+            as="link"
+            to="/catalog"
+            variant="primary"
+            size="lg"
+            className={s.cta}
+            aria-label="Open catalog"
+          >
             View Now
-          </Link>
+          </Button>
         </div>
       </section>
-    </main>
+    </Container>
   );
-};
-
-export default Home;
+}

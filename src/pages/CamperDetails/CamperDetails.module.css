@@ -1,161 +1,211 @@
+/* src/pages/CamperDetails/CamperDetails.module.css */
+
+/* НІЯКИХ max-width/padding тут — це робить <Container> */
 .main {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 24px;
+  background: var(--white);
+  font-family: var(--font-family);
 }
+
+.error {
+  color: #e44848;
+  font-weight: 600;
+}
+
+/* шапка: назва + ціна */
 .headerRow {
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 16px;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-md);
 }
+
 .title {
   margin: 0;
-  font-size: 28px;
   font-weight: 700;
+  color: var(--black);
+  font-size: var(--font-size-xl);
 }
+
 .price {
   font-weight: 700;
-  font-size: 20px;
+  color: var(--black);
+  font-size: var(--font-size-lg);
 }
 
+/* метадані під заголовком */
 .meta {
   display: flex;
-  gap: 16px;
-  margin: 8px 0 16px;
-  color: #667085;
-}
-.metaItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.metaText {
-  color: #101828;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: 16px 0;
-}
-.gallery img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.description {
-  margin: 8px 0 16px;
-  color: #475467;
-}
-
-.tabs {
-  display: flex;
-  gap: 16px;
-  border-bottom: 1px solid #eee;
-  margin: 16px 0;
-}
-.tabBtn {
-  background: none;
-  border: none;
-  padding: 12px 4px;
-  font-weight: 600;
-  color: #667085;
-  cursor: pointer;
-}
-.active {
-  color: #e44848;
-  border-bottom: 2px solid #e44848;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 24px;
-  align-items: start;
-}
-
-.featureChips {
-  display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-md);
 }
-.chip {
-  padding: 6px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  background: #f9fafb;
-  font-size: 12px;
+
+.metaItem {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--gap-xs);
 }
 
-.subTitle {
-  margin: 16px 0 8px;
+.metaText {
+  font-size: var(--font-size-sm);
+  color: var(--black);
 }
-.detailsList {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 24px;
+
+/* сірий для іконки мапи (спрайт з color-слотами) */
+.iconGray {
+  color: #667085; /* якщо символ успадковує currentColor */
+  --color2: #667085; /* для символів зі змінними */
+  --color3: #e5e7eb;
 }
-.dlRow {
+
+/* галерея-обгортка (сама сітка всередині CamperGallery) */
+.gallery {
+  margin-bottom: var(--gap-md);
+}
+
+/* опис */
+.description {
+  margin: 0 0 var(--gap-lg);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--black);
+}
+
+/* вкладки */
+.tabs {
   display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px dashed #eee;
+  gap: var(--gap-sm);
+  border-bottom: 1px solid var(--light-gray);
+  margin-bottom: var(--gap-md);
 }
-.dlRow dt {
-  color: #667085;
+
+.tabBtn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-size: var(--font-size-base);
+  color: var(--black);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
 }
-.dlRow dd {
-  margin: 0;
+
+.tabBtn:hover {
+  color: var(--red);
+}
+
+.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
   font-weight: 600;
+}
+
+/* 2-колоночний макет: контент + форма */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-lg);
+}
+
+.left,
+.right {
+  min-width: 0;
+}
+
+/* Reviews */
+.muted {
+  color: var(--gray);
 }
 
 .reviews {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--gap-md);
 }
+
 .reviewItem {
   display: flex;
-  gap: 12px;
+  gap: var(--gap-sm);
 }
+
 .avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #eaeaea;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 999px;
+  background: #f7f7f7;
+  border: 1px solid var(--light-gray);
+  display: grid;
+  place-items: center;
   font-weight: 700;
-  color: #475467;
+  color: var(--black);
 }
+
 .reviewBody {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
 }
+
 .reviewHead {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-.reviewText {
-  margin: 6px 0 0;
-  color: #475467;
+  gap: var(--gap-sm);
 }
 
-.muted {
-  color: #98a2b3;
+.reviewText {
+  margin: 0;
+  color: var(--black);
+  line-height: 1.5;
 }
-.error {
-  color: #e44848;
+
+/* --- breakpoints --- */
+@media only screen and (min-width: 768px) {
+  .headerRow {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 360px; /* контент + форма праворуч */
+    align-items: start;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .metaText {
+    font-size: 18px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 400px;
+    gap: var(--gap-lg);
+  }
+
+  .price {
+    font-size: 28px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .title {
+    font-size: 40px;
+  }
+
+  .metaText {
+    font-size: 22px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 440px;
+  }
+
+  .price {
+    font-size: 32px;
+  }
 }

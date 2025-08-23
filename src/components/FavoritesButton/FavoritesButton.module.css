@@ -1,0 +1,33 @@
+/* src/components/FavoritesButton/FavoritesButton.module.css */
+.fav {
+  appearance: none;
+  border: 1px solid var(--light-gray);
+  background: #fff;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.fav:hover {
+  border-color: var(--red);
+  background: rgba(228, 72, 72, 0.06);
+}
+
+.fav:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(228, 72, 72, 0.25);
+}
+
+.active {
+  border-color: var(--red);
+}
+
+.fav:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

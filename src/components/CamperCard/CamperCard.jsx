@@ -1,100 +1,110 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite } from "../../redux/favoritesSlice";
-import cn from "classnames";
 import s from "./CamperCard.module.css";
 import Icon from "../Icon/Icon";
+import Button from "../Button/Button";
+import FavoritesButton from "../FavoritesButton/FavoritesButton";
+import LocationRating from "../LocationRating/LocationRating";
+import PriceTag from "../PriceTag/PriceTag";
 
-const formatPrice = (n) => `${Number(n).toFixed(2)}`;
+// формат € 8,000.00
+const formatPrice = (n) =>
+  Number(n).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
-const CamperCard = ({ camper }) => {
-  const dispatch = useDispatch();
-  const favs = useSelector((st) => st.favorites.ids);
-  const isFav = favs.includes(String(camper.id));
+// фолбек-картинка з public
+const FALLBACK_IMG = "/img/Picture-2x.jpg";
+
+export default function CamperCard({ camper }) {
+  const cover =
+    (Array.isArray(camper?.gallery) &&
+      (camper.gallery[0]?.thumb || camper.gallery[0])) ||
+    FALLBACK_IMG;
 
   return (
     <article className={s.card}>
-      <img className={s.thumb} src={camper.gallery?.[0]} alt={camper.name} />
+      <div className={s.imageWrap}>
+        <img
+          className={s.thumb}
+          src={cover}
+          alt={camper?.name || "Camper"}
+          loading="lazy"
+        />
+      </div>
 
       <div className={s.body}>
-        <div className={s.top}>
+        {/* top row: name + price + fav */}
+        <header className={s.top}>
           <h3 className={s.name}>{camper.name}</h3>
 
           <div className={s.right}>
             {camper.price != null && (
-              <span className={s.price}>{formatPrice(camper.price)}</span>
+              <PriceTag price={camper.price} size="md" />
             )}
-
-            <button
-              type="button"
-              aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
-              aria-pressed={isFav}
-              onClick={() => dispatch(toggleFavorite(camper.id))}
-              className={cn(s.fav, isFav && s.favActive)}
-              title={isFav ? "Remove from favorites" : "Add to favorites"}
-            >
-              <Icon
-                name="heart"
-                className="icon"
-                size={18}
-                style={
-                  isFav
-                    ? { "--color2": "#e44848", "--color3": "#e44848" }
-                    : { "--color2": "#667085", "--color3": "#e5e7eb" }
-                }
-              />
-            </button>
+            <FavoritesButton id={camper.id} />
           </div>
+        </header>
+
+        {/* rating + reviews + location */}
+        <div className={s.metaRow}>
+          <LocationRating
+            id={camper.id}
+            rating={camper.rating}
+            reviewsCount={camper.reviews?.length || 0}
+            location={camper.location}
+          />
         </div>
 
-        {camper.location && (
-          <p className={s.location}>
-            <Icon
-              name="bi_grid-3x3-gap"
-              className={`icon ${s.locIcon}`}
-              size={16}
-              style={{ "--color1": "#667085" }}
-            />
-            {camper.location}
-          </p>
-        )}
+        {camper.description && <p className={s.desc}>{camper.description}</p>}
 
+        {/* чіпси-атрибути */}
         <div className={s.chips}>
-          {camper.AC && (
+          {camper.transmission && (
+            <span className={s.chip}>
+              <Icon name="icon-diagram" className="icon" size={16} />
+              {camper.transmission}
+            </span>
+          )}
+          {camper.engine && (
             <span className={s.chip}>
               <Icon
-                name="wind"
+                name="icon-hugeicons_gas-stove"
                 className="icon"
                 size={16}
-                style={{ "--color1": "#667085" }}
               />
+              {camper.engine}
+            </span>
+          )}
+          {camper.AC && (
+            <span className={s.chip}>
+              <Icon name="icon-wind" className="icon" size={16} />
               AC
             </span>
           )}
           {camper.kitchen && (
             <span className={s.chip}>
-              <Icon name="cup-hot" className="icon" size={16} />
+              <Icon name="icon-cup-hot" className="icon" size={16} />
               Kitchen
             </span>
           )}
           {camper.bathroom && (
             <span className={s.chip}>
-              <Icon name="ph_shower" className="icon" size={16} />
+              <Icon name="icon-ph_shower" className="icon" size={16} />
               Bathroom
             </span>
           )}
         </div>
 
-        <a
-          href={`/catalog/${camper.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button
+          as="link"
+          to={`/catalog/${camper.id}`}
+          variant="primary"
+          size="md"
           className={s.moreBtn}
         >
           Show more
-        </a>
+        </Button>
       </div>
     </article>
   );
-};
-
-export default CamperCard;
+}

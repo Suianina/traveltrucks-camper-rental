@@ -1,45 +1,88 @@
+/* Хедер на всю ширину екрану, контент вирівнює Container всередині */
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: #fff;
-  border-bottom: 1px solid #ececec;
+  z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
 }
 
+/* ЦЕ клас, який ми передаємо самому <Container> */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  height: 72px;
 }
 
+/* ВАЖЛИВО: тут НІЯКИХ max-width/padding — це робить Container */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  padding-block: 16px; /* лише вертикальні відступи */
+}
+
+/* Лого */
 .logo {
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
 }
 .logoImg {
   display: block;
-  height: 28px;
+  width: 136px;
+  height: 16px;
 }
 
+/* Навігація */
 .nav {
   display: flex;
   gap: 24px;
 }
-
 .link {
-  color: #667085;
-  text-decoration: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
   font-weight: 500;
-  transition: color 0.2s ease;
+  color: var(--black);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 .link:hover {
-  color: #101828;
+  color: var(--red);
+}
+.active {
+  color: var(--red);
+  font-weight: 600;
 }
 
-.active {
-  color: #e44848;
+/* Tablet+ */
+@media (min-width: 768px) {
+  .inner {
+    padding-block: 0;
+    min-height: 72px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1440px) {
+  .nav {
+    gap: 32px;
+  }
+  .link {
+    font-size: 18px;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1800px) {
+  .inner {
+    min-height: 80px;
+  }
+  .link {
+    font-size: 20px;
+  }
 }

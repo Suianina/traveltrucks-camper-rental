@@ -1,81 +1,111 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { getCampers, getCamperById } from "../services/campersAPI";
 
 const buildParams = ({ page = 1, limit = 4, filters }) => {
-  const params = { page, limit };
-  if (filters?.location) params.location = filters.location;
-  if (filters?.form) params.form = filters.form;
+  const p = { page, limit };
+
+  const loc = filters?.location?.trim();
+  if (loc) p.location = loc;
+
+  if (filters?.form) p.form = filters.form;
+
   if (filters?.equipment) {
-    Object.entries(filters.equipment).forEach(([k, v]) => {
-      if (v) params[k] = true;
-    });
+    for (const [k, v] of Object.entries(filters.equipment)) {
+      if (v) p[k] = true; // бекенд-фільтрація
+    }
   }
-  return params;
+  return p;
 };
 
 export const fetchCampers = createAsyncThunk(
   "campers/fetchAll",
-  async ({ page = 1, limit = 4, filters }, thunkAPI) => {
+  async ({ page = 1, limit = 4, filters }, { rejectWithValue, signal }) => {
     try {
-      const data = await getCampers(buildParams({ page, limit, filters }));
+      const data = await getCampers(buildParams({ page, limit, filters }), {
+        signal,
+      });
       return { data, page, limit };
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      const msg =
+        e?.response?.data?.message || e?.message || "Failed to load campers";
+      return rejectWithValue(msg);
     }
   }
 );
 
 export const fetchCamperById = createAsyncThunk(
   "campers/fetchById",
-  async (id, thunkAPI) => {
+  async (id, { rejectWithValue, signal }) => {
     try {
-      return await getCamperById(id);
+      const data = await getCamperById(id, { signal });
+      return data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      const msg =
+        e?.response?.data?.message || e?.message || "Failed to load camper";
+      return rejectWithValue(msg);
     }
   }
 );
 
-const slice = createSlice({
+const initialState = {
+  items: [],
+  current: null,
+  page: 1,
+  // читаємо з .env, fallback = 4
+  limit: Number(import.meta.env.VITE_PER_PAGE) || 4,
+  hasMore: true,
+  isLoading: false,
+  error: null,
+};
+
+const campersSlice = createSlice({
   name: "campers",
-  initialState: {
-    items: [],
-    current: null,
-    page: 1,
-    limit: 4,
-    hasMore: true,
-    isLoading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    resetCampers: (s) => {
-      s.items = [];
-      s.page = 1;
-      s.hasMore = true;
-      s.error = null;
+    resetCampers(state) {
+      state.items = [];
+      state.page = 1;
+      state.hasMore = true;
+      state.error = null;
+    },
+    clearCurrent(state) {
+      state.current = null;
     },
   },
-  extraReducers: (b) => {
-    b.addCase(fetchCampers.pending, (s) => {
-      s.isLoading = true;
-      s.error = null;
-    })
-      .addCase(fetchCampers.fulfilled, (s, { payload }) => {
-        s.isLoading = false;
-        s.page = payload.page;
-        if (payload.page === 1) s.items = payload.data;
-        else s.items = [...s.items, ...payload.data];
-        s.hasMore = payload.data.length === payload.limit;
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCampers.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.page = payload.page;
+
+        state.items =
+          payload.page === 1 ? payload.data : [...state.items, ...payload.data];
+
+        // якщо прийшло рівно limit — імовірно ще є сторінки
+        state.hasMore =
+          payload.data.length === payload.limit && payload.data.length > 0;
       })
-      .addCase(fetchCampers.rejected, (s, a) => {
-        s.isLoading = false;
-        s.error = a.payload || a.error.message;
+      .addCase(fetchCampers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || action.error.message;
       })
-      .addCase(fetchCamperById.fulfilled, (s, { payload }) => {
-        s.current = payload;
+      .addCase(fetchCamperById.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.current = payload;
+      })
+      .addMatcher(
+        isAnyOf(fetchCampers.pending, fetchCamperById.pending),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(isAnyOf(fetchCamperById.rejected), (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || action.error.message;
       });
   },
 });
 
-export const { resetCampers } = slice.actions;
-export default slice.reducer;
+export const { resetCampers, clearCurrent } = campersSlice.actions;
+export default campersSlice.reducer;

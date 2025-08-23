@@ -1,31 +1,194 @@
-* {
+/* src/styles/global.css */
+
+/* ====== Design tokens ====== */
+:root {
+  --green: #649179;
+  --green-darker: #374f42;
+
+  --black: #070721;
+  --white: #f7fffb;
+
+  /* Primary (червоний з макету Figma) */
+  --red: #e44848;
+  --red-hover: #d84343;
+
+  /* Accent / доп. */
+  --purple: #7678ed;
+  --gray: #595d62;
+  --light-gray: #9f9f9f;
+  --light-green: #d1e0d8;
+
+  --font-family: "Manrope", sans-serif;
+  --second-family: "DM Sans", sans-serif;
+
+  --font-size-sm: clamp(12px, 1.5vw, 14px);
+  --font-size-base: clamp(14px, 2vw, 16px);
+  --font-size-lg: clamp(24px, 4vw, 32px);
+  --font-size-xl: clamp(28px, 5vw, 40px);
+
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 20px;
+  --gap-lg: 32px;
+
+  --border-radius: 8px;
+
+  --transition: 0.3s ease-in-out;
+  --transition-curve: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Breakpoints → контейнерні токени */
+@media (min-width: 393px) {
+  :root {
+    --container-width: 393px;
+    --container-padding: 0px;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --container-width: 768px;
+    --container-padding: 32px;
+  }
+}
+@media (min-width: 1440px) {
+  :root {
+    --container-width: 1440px;
+    --container-padding: 108px;
+  }
+}
+@media (min-width: 1800px) {
+  :root {
+    --container-width: 1800px;
+    --container-padding: 180px;
+  }
+}
+
+/* ====== Reset / base ====== */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 html,
-body,
-#root {
-  height: 100%;
-}
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  color: #101828;
-  background: #fff;
+  padding: 0;
 }
-button {
-  font: inherit;
-  cursor: pointer;
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--black);
+  background: var(--white);
+  line-height: 1.4;
 }
 img {
   display: block;
   max-width: 100%;
 }
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Layout helpers */
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
+}
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ====== Icons (SVG sprite) ====== */
+/* один раз визначаємо базовий стиль */
 .icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
   color: currentColor;
+
+  /* дефолтні кольори шарів спрайта */
   --color1: currentColor;
   --color2: currentColor;
   --color3: currentColor;
   --color4: currentColor;
   --color5: currentColor;
+}
+
+/* Розміри */
+.iconSm {
+  width: 16px;
+  height: 16px;
+}
+.iconMd {
+  width: 20px;
+  height: 20px;
+}
+.iconLg {
+  width: 24px;
+  height: 24px;
+}
+.iconXl {
+  width: 32px;
+  height: 32px;
+}
+
+/* Кольорові варіанти під макет */
+.iconGray {
+  --color1: #667085;
+  --color2: #e5e7eb;
+}
+.iconRed {
+  --color1: var(--red);
+  --color2: var(--red);
+}
+.iconYellow {
+  --color1: #ffc531;
+}
+.iconGreen {
+  --color1: #16a34a;
+}
+
+.pageCenter {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,30 +1,35 @@
-const Icon = ({
+// src/components/Icon/Icon.jsx
+import cn from "classnames";
+
+export default function Icon({
   name,
+  id,
   size = 20,
-  color = "currentColor",
+  width,
+  height,
   className,
-  label,
-  style,
+  inline = false, // true, якщо <svg> спрайт інлайном у index.html
   ...rest
-}) => {
-  const href = `${import.meta.env.BASE_URL}icons/sprite.svg#${name}`;
+}) {
+  const symbol = (name || id || "").replace(/^#/, "");
+  if (!symbol) return null;
+
+  const base = import.meta.env.BASE_URL || "/";
+  const href = inline ? `#${symbol}` : `${base}icons/sprite.svg#${symbol}`;
+
+  const w = width ?? size;
+  const h = height ?? size;
 
   return (
     <svg
-      width={size}
-      height={size}
-      fill={color}
-      className={className}
-      role={label ? "img" : undefined}
-      aria-hidden={label ? undefined : true}
+      className={cn("icon", className)}
+      width={w}
+      height={h}
+      aria-hidden={rest["aria-label"] ? undefined : true}
       focusable="false"
-      style={style}
       {...rest}
     >
-      {label ? <title>{label}</title> : null}
-      <use href={href} xlinkHref={href} />
+      <use href={href} />
     </svg>
   );
-};
-
-export default Icon;
+}

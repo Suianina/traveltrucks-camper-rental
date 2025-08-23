@@ -1,0 +1,16 @@
+/* Розширюємо внутрішній контейнер модалки спеціально для фото */
+.modalWide {
+  max-width: min(980px, 95vw);
+  width: auto;
+  padding: 16px;
+}
+
+.img {
+  display: block;
+  max-width: 90vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}

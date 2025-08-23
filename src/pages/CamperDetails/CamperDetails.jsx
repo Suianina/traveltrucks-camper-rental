@@ -1,39 +1,51 @@
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+// src/pages/CamperDetails/CamperDetails.jsx
+import { useEffect, useMemo, useState, useCallback } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
-import styles from "./CamperDetails.module.css";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchCamperById, clearCurrent } from "../../redux/campersSlice"; // ← шлях під твій store
+
+import Container from "../../components/Container/Container";
+import CamperGallery from "../../components/CamperGallery/CamperGallery";
+import CamperFeatures from "../../components/CamperFeatures/CamperFeatures";
 import BookForm from "../../components/BookForm/BookForm";
 import RatingStars from "../../components/RatingStars/RatingStars";
 import Icon from "../../components/Icon/Icon";
+import Loader from "../../components/Loader/Loader";
 
-const API =
-  import.meta.env.VITE_API_URL || "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
+import styles from "./CamperDetails.module.css";
 
-const formatPrice = (n) => (n != null ? `${Number(n).toFixed(2)}` : "—");
+const formatPrice = (n) =>
+  n != null
+    ? `€${Number(n).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`
+    : "—";
 
 export default function CamperDetails() {
   const { id } = useParams();
-  const [camper, setCamper] = useState(null);
+  const { search } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const camper = useSelector((s) => s.campers.current);
+  const loading = useSelector((s) => s.campers.isLoading);
+  const error = useSelector((s) => s.campers.error);
+
   const [tab, setTab] = useState("features");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    let ignore = false;
-    setLoading(true);
-    setError("");
-    axios
-      .get(`${API}/campers/${id}`)
-      .then(({ data }) => {
-        if (!ignore) setCamper(data);
-      })
-      .catch((e) => !ignore && setError(e.message || "Failed to load"))
-      .finally(() => !ignore && setLoading(false));
-    return () => {
-      ignore = true;
-    };
-  }, [id]);
+    const q = new URLSearchParams(search);
+    const t = q.get("tab");
+    if (t === "reviews" || t === "features") setTab(t);
+  }, [search]);
+
+  useEffect(() => {
+    if (id) dispatch(fetchCamperById(id));
+    return () => dispatch(clearCurrent());
+  }, [id, dispatch]);
 
   const ratingValue = useMemo(() => {
     if (!camper) return null;
@@ -49,22 +61,62 @@ export default function CamperDetails() {
     : "Camper details | TravelTrucks";
   const pageDesc = camper?.description?.slice(0, 160) || "Camper details";
 
+  const setTabAndUrl = useCallback(
+    (t) => {
+      setTab(t);
+      const q = new URLSearchParams(search);
+      q.set("tab", t);
+      navigate({ search: q.toString() }, { replace: true });
+    },
+    [navigate, search]
+  );
+
+  const onTabsKeyDown = useCallback(
+    (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      const order = ["features", "reviews"];
+      const idx = order.indexOf(tab);
+      const next =
+        e.key === "ArrowRight"
+          ? order[(idx + 1) % order.length]
+          : order[(idx - 1 + order.length) % order.length];
+      setTabAndUrl(next);
+    },
+    [tab, setTabAndUrl]
+  );
+
   if (loading)
     return (
-      <main className={styles.main}>
-        <p>Loading…</p>
-      </main>
+      <Container as="main" className={styles.main} aria-busy="true">
+        <Loader size="lg" />
+      </Container>
     );
+
   if (error)
     return (
-      <main className={styles.main}>
-        <p className={styles.error}>{error}</p>
-      </main>
+      <Container as="main" className={styles.main}>
+        <p className={styles.error}>Error: {error}</p>
+      </Container>
     );
-  if (!camper) return null;
+
+  if (!camper)
+    return (
+      <Container as="main" className={styles.main}>
+        <p className={styles.muted}>Camper not found.</p>
+      </Container>
+    );
+
+  const reviewsCount = camper.reviews?.length || 0;
+  const images = Array.isArray(camper.gallery)
+    ? camper.gallery
+        .map((g) =>
+          typeof g === "string" ? g : g?.thumb || g?.original || g?.url || null
+        )
+        .filter(Boolean)
+    : [];
 
   return (
-    <main className={styles.main}>
+    <Container as="main" className={styles.main} aria-busy="false">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
@@ -78,28 +130,27 @@ export default function CamperDetails() {
       <div className={styles.meta}>
         {ratingValue != null && (
           <span className={styles.metaItem}>
-            <RatingStars value={ratingValue} />
-            <span className={styles.metaText}>{ratingValue}</span>
+            <RatingStars value={ratingValue} size={16} />
+            <span className={styles.metaText}>
+              {ratingValue} ({reviewsCount} Reviews)
+            </span>
           </span>
         )}
         {camper.location && (
           <span className={styles.metaItem}>
             <Icon
-              name="icon-bi_grid-3x3-gap"
+              name="icon-City" /* ← новий id */
               size={16}
-              color="#667085"
-              className="icon"
+              className={`icon ${styles.iconGray}`}
             />
             <span className={styles.metaText}>{camper.location}</span>
           </span>
         )}
       </div>
 
-      {Array.isArray(camper.gallery) && camper.gallery.length > 0 && (
+      {images.length > 0 && (
         <div className={styles.gallery}>
-          {camper.gallery.map((src, i) => (
-            <img key={i} src={src} alt={`${camper.name} ${i + 1}`} />
-          ))}
+          <CamperGallery images={images} name={camper.name} />
         </div>
       )}
 
@@ -111,128 +162,64 @@ export default function CamperDetails() {
         className={styles.tabs}
         role="tablist"
         aria-label="Camper details tabs"
+        onKeyDown={onTabsKeyDown}
       >
         <button
+          id="tab-features"
           type="button"
           role="tab"
+          aria-controls="panel-features"
           aria-selected={tab === "features"}
           className={`${styles.tabBtn} ${
             tab === "features" ? styles.active : ""
           }`}
-          onClick={() => setTab("features")}
+          onClick={() => setTabAndUrl("features")}
         >
           Features
         </button>
         <button
+          id="tab-reviews"
           type="button"
           role="tab"
+          aria-controls="panel-reviews"
           aria-selected={tab === "reviews"}
           className={`${styles.tabBtn} ${
             tab === "reviews" ? styles.active : ""
           }`}
-          onClick={() => setTab("reviews")}
+          onClick={() => setTabAndUrl("reviews")}
         >
           Reviews
         </button>
       </div>
 
       <div className={styles.grid}>
-        <section className={styles.left} aria-live="polite">
-          {tab === "features" ? (
-            <Features camper={camper} />
-          ) : (
-            <Reviews reviews={camper.reviews || []} />
-          )}
+        <section
+          id="panel-features"
+          role="tabpanel"
+          aria-labelledby="tab-features"
+          hidden={tab !== "features"}
+          className={styles.left}
+          aria-live="polite"
+        >
+          <CamperFeatures camper={camper} />
+        </section>
+
+        <section
+          id="panel-reviews"
+          role="tabpanel"
+          aria-labelledby="tab-reviews"
+          hidden={tab !== "reviews"}
+          className={styles.left}
+          aria-live="polite"
+        >
+          <Reviews reviews={camper.reviews || []} />
         </section>
 
         <aside className={styles.right}>
           <BookForm camperName={camper.name} />
         </aside>
       </div>
-    </main>
-  );
-}
-
-function Features({ camper }) {
-  const items = [
-    camper.transmission && {
-      key: "transmission",
-      label: `Transmission: ${camper.transmission}`,
-      name: "icon-bi_grid",
-    },
-    camper.engine && {
-      key: "engine",
-      label: `Engine: ${camper.engine}`,
-      name: "icon-diagram",
-    },
-    camper.AC && { key: "AC", label: "AC", name: "icon-wind" },
-    camper.bathroom && {
-      key: "bathroom",
-      label: "Bathroom",
-      name: "icon-ph_shower",
-    },
-    camper.kitchen && {
-      key: "kitchen",
-      label: "Kitchen",
-      name: "icon-cup-hot",
-    },
-    camper.TV && { key: "TV", label: "TV", name: "icon-tv" },
-    camper.radio && { key: "radio", label: "Radio", name: "icon-bi_grid-1x2" },
-    camper.refrigerator && {
-      key: "refrigerator",
-      label: "Refrigerator",
-      name: "icon-solar_fridge-outline",
-    },
-    camper.microwave && {
-      key: "microwave",
-      label: "Microwave",
-      name: "icon-lucide_microwave",
-    },
-    camper.gas && {
-      key: "gas",
-      label: "Gas",
-      name: "icon-hugeicons_gas-stove",
-    },
-    camper.water && {
-      key: "water",
-      label: "Water",
-      name: "icon-ion_water-outline",
-    },
-  ].filter(Boolean);
-
-  return (
-    <>
-      <div className={styles.featureChips}>
-        {items.map(({ key, label, name }) => (
-          <span key={key} className={styles.chip}>
-            <Icon name={name} size={16} color="#667085" className="icon" />
-            {label}
-          </span>
-        ))}
-      </div>
-
-      <h3 className={styles.subTitle}>Vehicle details</h3>
-      <dl className={styles.detailsList}>
-        {[
-          ["Form", camper.form],
-          ["Length", camper.length ? `${camper.length} m` : null],
-          ["Width", camper.width ? `${camper.width} m` : null],
-          ["Height", camper.height ? `${camper.height} m` : null],
-          ["Tank", camper.tank ? `${camper.tank} l` : null],
-          [
-            "Consumption",
-            camper.consumption ? `${camper.consumption} l/100km` : null,
-          ],
-        ]
-          .filter(([, v]) => v)
-          .map(([k, v]) => (
-            <div key={k} className={styles.dlRow}>
-              <dt>{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-      </dl>
-    </>
+    </Container>
   );
 }
 
@@ -242,11 +229,13 @@ function Reviews({ reviews }) {
     <ul className={styles.reviews}>
       {reviews.map((r, i) => (
         <li key={i} className={styles.reviewItem}>
-          <div className={styles.avatar}>{r.reviewer_name?.[0] || "U"}</div>
+          <div className={styles.avatar}>
+            {r.reviewer_name?.[0]?.toUpperCase() || "U"}
+          </div>
           <div className={styles.reviewBody}>
             <div className={styles.reviewHead}>
               <strong>{r.reviewer_name || "User"}</strong>
-              <RatingStars value={r.rating || 0} />
+              <RatingStars value={r.rating || 0} size={16} />
             </div>
             <p className={styles.reviewText}>{r.comment}</p>
           </div>
