@@ -1,11 +1,9 @@
-import icons from '../../img/symbol-defs.svg';
+import icons from "../../img/symbol-defs.svg";
 
-const Icon = ({ id, width, height, className = '' }) => {
-    return (
-        <svg className={className} width={width} height={height} aria-hidden="true">
-            <use href={`${icons}#${id}`}></use>
-        </svg>
+const Icon = ({ id, width, height, className = "" }) => (
+  <svg className={className} width={width} height={height} aria-hidden="true">
+    <use href={`${icons}#${id}`} />
+  </svg>
+);
 
-    )
-}
-export default Icon
+export default Icon;

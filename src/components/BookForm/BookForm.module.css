@@ -1,79 +1,61 @@
-.container{
-border: 1px solid #dadde1;
-border-radius: 10px;
-padding: 44px;
-width: 641px;
-height: 588px;
-}
-
-.title{
-font-weight: 600;
-font-size: 20px;
-line-height: 1.2;
-color: var(--main);
-margin-bottom: 8px;
-}
-
-.text{
-font-weight: 400;
-font-size: 16px;
-line-height: 1.5;
-color: var(--text);
-margin-bottom: 24px;
-}
-
-.form{
-  text-align: center;
-}
-
-.fieldform{
-
-}
-
-.input{
-  border-radius: 12px;
-  padding: 18px;
-  width: 100%;
+.wrap {
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 24px;
   background: var(--inputs);
-  border: none;
-  margin-bottom: 14px;
+}
 
-  font-family: var(--font-family);
-  font-weight: 400;
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--main);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--text);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
   font-size: 16px;
   line-height: 1.5;
-  color: var(--gray);
-}
-textarea.input {
-  width: 527px;
-  height: 118px;
-  resize: none;
-  margin-bottom: 24px;
+  color: var(--main);
+  margin-bottom: 14px;
 }
 
-.errorMess{
- font-weight: 400;
-  font-size: 14px;
-  line-height: 1.29;
-  color: var(--button);
-  margin-bottom: 10px;
-  text-align: left;
+.textarea {
+  min-height: 114px;
+  resize: vertical;
 }
 
-
-.btn {
-  letter-spacing: -0.01em;
-  color: var(--white);
-  font-size: 16px;
+.submit {
+  display: block;
+  margin: 24px auto 0;
   border-radius: 200px;
-  padding: 16px 60px;
   width: 166px;
-  margin-top: 40px;
-
+  height: 56px;
+  background: var(--button);
+  color: var(--white);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   text-align: center;
-  background-color: var(--button);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.btn:hover {
-  background: var( --button-hover);
+.submit:hover,
+.submit:focus {
+  background: var(--button-hover);
 }
