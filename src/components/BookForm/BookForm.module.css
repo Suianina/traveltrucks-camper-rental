@@ -1,168 +1,79 @@
-.box {
+.container{
+border: 1px solid #dadde1;
+border-radius: 10px;
+padding: 44px;
+width: 641px;
+height: 588px;
+}
+
+.title{
+font-weight: 600;
+font-size: 20px;
+line-height: 1.2;
+color: var(--main);
+margin-bottom: 8px;
+}
+
+.text{
+font-weight: 400;
+font-size: 16px;
+line-height: 1.5;
+color: var(--text);
+margin-bottom: 24px;
+}
+
+.form{
+  text-align: center;
+}
+
+.fieldform{
+
+}
+
+.input{
+  border-radius: 12px;
+  padding: 18px;
   width: 100%;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-
-  background: #fff;
-  border: 1px solid var(--light-gray);
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-
-  padding: 24px;
-}
-
-.title {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.2;
-  color: var(--black);
-  margin: 4px 0 8px;
-}
-
-.sub {
-  font-size: var(--font-size-sm);
-  color: var(--gray);
-  margin: 0 0 20px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 100%;
-}
-
-.label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: var(--font-size-sm);
-  color: var(--black);
-}
-
-.req::after {
-  content: " *";
-  color: var(--red);
-  font-weight: 600;
-}
-
-.input,
-.textarea {
-  width: 100%;
-  border: 1px solid var(--light-gray);
-  border-radius: 8px;
-  background: #fff;
+  background: var(--inputs);
+  border: none;
+  margin-bottom: 14px;
 
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  color: var(--black);
-
-  padding: 12px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.input {
-  height: 56px;
-}
-
-.textarea {
-  min-height: 114px;
-  resize: vertical;
-}
-
-.input::placeholder,
-.textarea::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--gray);
-  opacity: 0.8;
+}
+textarea.input {
+  width: 527px;
+  height: 118px;
+  resize: none;
+  margin-bottom: 24px;
 }
 
-.input:focus-visible,
-.textarea:focus-visible {
-  outline: none;
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px rgba(228, 72, 72, 0.15);
+.errorMess{
+ font-weight: 400;
+  font-size: 14px;
+  line-height: 1.29;
+  color: var(--button);
+  margin-bottom: 10px;
+  text-align: left;
 }
 
-/* підсвітка інвалідних полів від Formik через aria-invalid */
-.input[aria-invalid="true"],
-.textarea[aria-invalid="true"] {
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px rgba(228, 72, 72, 0.15);
+
+.btn {
+  letter-spacing: -0.01em;
+  color: var(--white);
+  font-size: 16px;
+  border-radius: 200px;
+  padding: 16px 60px;
+  width: 166px;
+  margin-top: 40px;
+
+  text-align: center;
+  background-color: var(--button);
 }
 
-/* Кнопка: стиль бере зі спільного Button,
-   тут лише “пігулка” і ширина, як у макеті */
-.submit {
-  width: 100%;
-  margin-top: 4px;
-  border-radius: 999px;
-}
-
-/* --- breakpoints --- */
-@media only screen and (min-width: 768px) {
-  .box {
-    max-width: 768px;
-    padding: 32px;
-    border-radius: 16px;
-  }
-  .form {
-    max-width: 458px;
-  }
-  .input,
-  .textarea {
-    font-size: var(--font-size-lg);
-    padding: 14px;
-  }
-  .title {
-    font-size: var(--font-size-xl);
-  }
-  .sub {
-    font-size: var(--font-size-base);
-  }
-}
-
-@media only screen and (min-width: 1440px) {
-  .box {
-    max-width: 1440px;
-    padding: 48px 108px;
-    border-radius: 24px;
-  }
-  .form {
-    max-width: 400px;
-  }
-  .input,
-  .textarea {
-    font-size: 24px;
-    padding: 16px;
-  }
-  .title {
-    font-size: 32px;
-  }
-  .sub {
-    font-size: 18px;
-  }
-}
-
-@media only screen and (min-width: 1800px) {
-  .box {
-    max-width: 1800px;
-    padding: 64px 180px;
-    border-radius: 32px;
-  }
-  .form {
-    max-width: 400px;
-  }
-  .input,
-  .textarea {
-    font-size: 32px;
-    padding: 24px;
-  }
-  .title {
-    font-size: 40px;
-  }
-  .sub {
-    font-size: 24px;
-  }
+.btn:hover {
+  background: var( --button-hover);
 }

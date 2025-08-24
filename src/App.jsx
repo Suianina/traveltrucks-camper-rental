@@ -1,35 +1,32 @@
-// src/App.jsx
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense} from 'react';
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import CamperReview from './components/CamperReview/CamperReview';
+import Features from './components/Features/Features';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
-import Header from "./components/Header/Header";
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import Loader from "./components/Loader/Loader";
-import NotFound from "./components/NotFound/NotFound";
 
-const Home = lazy(() => import("./pages/Home/Home"));
-const Catalog = lazy(() => import("./pages/Catalog/Catalog"));
-const CamperDetails = lazy(() => import("./pages/CamperDetails/CamperDetails"));
 
-export default function App() {
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const CatalogPage = lazy(() => import('./pages/CatalogPage/CatalogPage'));
+const DetailsPage = lazy(()=> import('./pages/DetailsPage/DetailsPage'));
+
+function App() {
   return (
     <>
-      <Header />
-      <ScrollToTop />
-      <Suspense
-        fallback={
-          <div role="status" aria-live="polite" style={{ padding: 24 }}>
-            <Loader />
-          </div>
-        }
-      >
+      <Suspense fallback={null}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/catalog/:id" element={<CamperDetails />} />
-          <Route path="*" element={<NotFound />} />
+          <Route index element={<HomePage />} />
+          <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/catalog/:camperId" element={<DetailsPage />}>
+            <Route path="features" element={<Features />} />
+            <Route path="reviews" element={<CamperReview />} />
+          </Route>
+          <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </Suspense>
     </>
   );
 }
+
+export default App

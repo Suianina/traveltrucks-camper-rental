@@ -1,110 +1,85 @@
-import s from "./CamperCard.module.css";
-import Icon from "../Icon/Icon";
-import Button from "../Button/Button";
-import FavoritesButton from "../FavoritesButton/FavoritesButton";
-import LocationRating from "../LocationRating/LocationRating";
-import PriceTag from "../PriceTag/PriceTag";
+import css from './CamperCard.module.css';
+import LocationRating from '../Location&Rating/LocationRating';
+import CategoriesItem from '../CategoriesItem/CategoriesItem';
+import PriceTag from '../PriceTag/PriceTag';
+import imgDefault from '../../img/imgDefault.jpg'
+import Icon from '../Icon/Icon';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
+import {
+  addToFavorite,
+  deleteFromFavorite,
+} from "../../redux/campers/slice.js";
+import { selectFavoriteItems } from '../../redux/campers/selectors.js';
+import { clsx } from 'clsx';
 
-// формат € 8,000.00
-const formatPrice = (n) =>
-  Number(n).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
-// фолбек-картинка з public
-const FALLBACK_IMG = "/img/Picture-2x.jpg";
 
-export default function CamperCard({ camper }) {
-  const cover =
-    (Array.isArray(camper?.gallery) &&
-      (camper.gallery[0]?.thumb || camper.gallery[0])) ||
-    FALLBACK_IMG;
+const CamperCard = ({ camper }) => {
+    const dispatch = useDispatch();
+    const favoriteItems = useSelector(selectFavoriteItems);
 
-  return (
-    <article className={s.card}>
-      <div className={s.imageWrap}>
-        <img
-          className={s.thumb}
-          src={cover}
-          alt={camper?.name || "Camper"}
-          loading="lazy"
-        />
-      </div>
+  const isFavorite =
+    Array.isArray(favoriteItems) &&
+    favoriteItems.find((favorite) => favorite.id === camper.id);
 
-      <div className={s.body}>
-        {/* top row: name + price + fav */}
-        <header className={s.top}>
-          <h3 className={s.name}>{camper.name}</h3>
+    const handleClick = () => {
+        if (isFavorite) {
+            dispatch(deleteFromFavorite(camper.id))
+            return;
+        }
+        dispatch(addToFavorite(camper))
+    };
 
-          <div className={s.right}>
-            {camper.price != null && (
-              <PriceTag price={camper.price} size="md" />
-            )}
-            <FavoritesButton id={camper.id} />
+    return (
+      <div className={css.container}>
+        <div className={css.wrapperForImage}>
+          <img
+            className={css.image}
+            src={
+              camper.gallery[0].thumb !== null
+                ? camper.gallery[0].thumb
+                : imgDefault
+            }
+            alt={camper.name}
+            height="320"
+          />
+        </div>
+        <div className={css.containerDescr}>
+          <div className={css.header}>
+            <h2 className={css.title}>{camper.name}</h2>
+            <div className={css.containerPrice}>
+              <PriceTag price={camper.price} />
+              <button
+                aria-label="Add to Favorite"
+                className={clsx(css.addFavorite, isFavorite && css.favorite)}
+                onClick={handleClick}
+              >
+                <Icon
+                  id="icon-Favorite"
+                  width={26}
+                  height={24}
+                  className={css.icon}
+                />
+              </button>
+            </div>
           </div>
-        </header>
-
-        {/* rating + reviews + location */}
-        <div className={s.metaRow}>
           <LocationRating
             id={camper.id}
             rating={camper.rating}
-            reviewsCount={camper.reviews?.length || 0}
+            numberReviews={camper.reviews.length}
             location={camper.location}
+            className={css.location}
           />
+
+          <p className={css.text}>{camper.description}</p>
+          <CategoriesItem camper={camper} />
+          <Link className={css.link} to={`/catalog/${camper.id}/features`}>
+            Show more
+          </Link>
         </div>
-
-        {camper.description && <p className={s.desc}>{camper.description}</p>}
-
-        {/* чіпси-атрибути */}
-        <div className={s.chips}>
-          {camper.transmission && (
-            <span className={s.chip}>
-              <Icon name="icon-diagram" className="icon" size={16} />
-              {camper.transmission}
-            </span>
-          )}
-          {camper.engine && (
-            <span className={s.chip}>
-              <Icon
-                name="icon-hugeicons_gas-stove"
-                className="icon"
-                size={16}
-              />
-              {camper.engine}
-            </span>
-          )}
-          {camper.AC && (
-            <span className={s.chip}>
-              <Icon name="icon-wind" className="icon" size={16} />
-              AC
-            </span>
-          )}
-          {camper.kitchen && (
-            <span className={s.chip}>
-              <Icon name="icon-cup-hot" className="icon" size={16} />
-              Kitchen
-            </span>
-          )}
-          {camper.bathroom && (
-            <span className={s.chip}>
-              <Icon name="icon-ph_shower" className="icon" size={16} />
-              Bathroom
-            </span>
-          )}
-        </div>
-
-        <Button
-          as="link"
-          to={`/catalog/${camper.id}`}
-          variant="primary"
-          size="md"
-          className={s.moreBtn}
-        >
-          Show more
-        </Button>
       </div>
-    </article>
-  );
+    );
 }
+export default CamperCard;

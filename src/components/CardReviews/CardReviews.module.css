@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--button);
+
+  padding: 13px 21px;
+  margin-right: 16px;
+
+  border-radius: 60px;
+
+  background: var(--badges);
+}
+
+.name {
+  color: var(--main);
+  margin-bottom: 4px;
+}
+
+.list {
+  display: flex;
+}
+
+.itemStars {
+  margin-right: 4px;
+}
+.star {
+  fill: var(--rating);
+}
+
+.starDisable {
+  fill: var(--badges);
+}

@@ -1,0 +1,23 @@
+.container{
+display: flex;
+align-items: center;
+margin-bottom: 24px;
+color: var(--main);
+}
+
+.star{
+fill: #ffc531;
+margin-right: 4px;
+}
+
+.reviews{
+margin-right: 16px;
+color: var(--main);
+}
+.reviews:hover{
+    text-decoration: underline;
+}
+
+.map{
+margin-right: 4px;
+}

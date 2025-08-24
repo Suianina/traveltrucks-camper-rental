@@ -1,139 +1,19 @@
-/* Використовує дизайн-токени з src/styles/global.css */
+.btn{
+border-radius: 200px;
+padding: 16px 60px;
+width: 166px;
+height: 56px;
+background: var(--button);
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border: none;
-  border-radius: 999px; /* піллюля як у макеті */
-  font-family: var(--font-family);
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1;
-
-  transition: background-color 0.25s ease, color 0.25s ease,
-    transform 0.12s var(--transition-curve), box-shadow 0.2s ease;
+font-family: var(--font-family);
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+letter-spacing: -0.01em;
+color: var(--white);
+transition: background 0.3s ease;
 }
 
-/* a11y */
-.btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(228, 72, 72, 0.25);
-}
-
-/* ===== Variants ===== */
-
-.primary {
-  background-color: var(--red);
-  color: #fff;
-}
-.primary:hover:not(:disabled),
-.primary[aria-disabled="false"]:hover {
-  background-color: var(--red-hover);
-}
-.primary:active:not(:disabled) {
-  transform: translateY(1px);
-}
-.primary:disabled,
-.primary[aria-disabled="true"] {
-  background-color: var(--light-gray);
-  color: #fff;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.secondary {
-  background-color: var(--light-gray);
-  color: var(--black);
-}
-.secondary:hover:not(:disabled),
-.secondary[aria-disabled="false"]:hover {
-  background-color: #d5d5d5;
-}
-.secondary:active:not(:disabled) {
-  transform: translateY(1px);
-}
-.secondary:disabled,
-.secondary[aria-disabled="true"] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.outline {
-  background-color: transparent;
-  border: 1px solid var(--red);
-  color: var(--red);
-}
-.outline:hover:not(:disabled),
-.outline[aria-disabled="false"]:hover {
-  background-color: rgba(228, 72, 72, 0.08);
-}
-.outline:active:not(:disabled) {
-  transform: translateY(1px);
-}
-.outline:disabled,
-.outline[aria-disabled="true"] {
-  border-color: var(--light-gray);
-  color: var(--light-gray);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* ===== Sizes ===== */
-
-.md {
-  font-size: var(--font-size-base);
-  padding: 12px 24px;
-  height: 56px;
-  min-width: 120px;
-}
-
-.lg {
-  font-size: var(--font-size-lg);
-  padding: 16px 32px;
-  height: 64px;
-  min-width: 140px;
-}
-
-/* --- breakpoints --- */
-
-@media only screen and (min-width: 768px) {
-  .md {
-    font-size: var(--font-size-lg);
-    padding: 14px 28px;
-    height: 60px;
-  }
-  .lg {
-    font-size: 22px;
-    padding: 18px 36px;
-    height: 68px;
-  }
-}
-
-@media only screen and (min-width: 1440px) {
-  .md {
-    font-size: 20px;
-    padding: 16px 30px;
-    height: 64px;
-  }
-  .lg {
-    font-size: 24px;
-    padding: 20px 40px;
-    height: 72px;
-  }
-}
-
-@media only screen and (min-width: 1800px) {
-  .md {
-    font-size: 24px;
-    padding: 18px 32px;
-    height: 72px;
-  }
-  .lg {
-    font-size: 28px;
-    padding: 24px 48px;
-    height: 80px;
-  }
+.btn:hover{
+    background: var(--button-hover);
 }

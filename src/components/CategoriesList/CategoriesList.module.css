@@ -1,0 +1,30 @@
+.container{
+display: flex;
+  align-items: center;
+  border-radius: 100px;
+  padding: 12px 18px;
+  width: auto; 
+  max-width: 100%; 
+  background: var(--badges);
+  margin-bottom: 8px;
+}
+
+.container:hover{
+  background: var(--gray-light);
+}
+
+.icon{
+margin-right: 8px;
+}
+
+.text{
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+text-align: center;
+color: var(--main); 
+}
+
+.text::first-letter {
+  text-transform: uppercase;
+}

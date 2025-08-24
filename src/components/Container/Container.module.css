@@ -1,12 +1,4 @@
-.box {
-  width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
-}
-.fluid {
-  max-width: none;
-  padding-left: 0;
-  padding-right: 0;
+.box{
+    margin: 0 auto;
+    padding: 0;
 }

@@ -1,7 +1,0 @@
-.err {
-  min-height: 16px;
-  color: var(--red); /* з токенів, як у макеті */
-  font-size: var(--font-size-sm);
-  line-height: 1.1;
-  margin-top: 4px;
-}

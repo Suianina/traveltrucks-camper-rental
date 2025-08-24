@@ -1,13 +1,7 @@
-// src/redux/store.js
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import campers from "./campersSlice";
-import filters from "./filtersSlice";
-import favorites from "./favoritesSlice";
-
-import storage from "redux-persist/lib/storage";
+import { configureStore } from "@reduxjs/toolkit";
 import {
-  persistReducer,
   persistStore,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -15,32 +9,33 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-// Персистимо лише список обраних ID
-const favoritesPersistConfig = {
-  key: "favorites",
-  version: 1,
+import campersReducer from "./campers/slice";
+import { filterReducer } from "./filters/filtersSlice.js";
+
+const persistAuthConfig = {
+  key: "campers",
   storage,
-  whitelist: ["ids"],
+  whitelist: ["favoriteItem"],
 };
 
-const rootReducer = combineReducers({
-  campers, // не персистимо (дані з бекенду, пагінація)
-  filters, // не персистимо (за ТЗ це не обов’язково)
-  favorites: persistReducer(favoritesPersistConfig, favorites),
-});
+const persistedCampersReducer = persistReducer(
+  persistAuthConfig,
+  campersReducer
+);
 
 export const store = configureStore({
-  reducer: rootReducer,
-  devTools: import.meta?.env?.MODE !== "production",
-  middleware: (getDefault) =>
-    getDefault({
+  reducer: {
+    campers: persistedCampersReducer,
+    filters: filterReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
       serializableCheck: {
-        // Рекомендовані винятки для redux-persist
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });
 
 export const persistor = persistStore(store);
-export default store;

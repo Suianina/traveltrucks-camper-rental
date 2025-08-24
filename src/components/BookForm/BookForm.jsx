@@ -1,122 +1,109 @@
-// src/components/BookForm/BookForm.jsx
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { toast } from "react-hot-toast";
-import styles from "./BookForm.module.css";
-import Button from "../Button/Button";
-import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
+import css from './BookForm.module.css';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import Button from '../Button/Button.jsx';
+import toast from 'react-hot-toast';
 
-const todayISO = () => new Date().toISOString().split("T")[0];
+const BookForm = () => {
+    const emailRegexp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const schema = Yup.object({
-  name: Yup.string()
-    .trim()
-    .min(2, "Min 2 characters")
-    .max(25, "Max 25 characters")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  date: Yup.date()
-    .transform((val, orig) => (orig ? new Date(orig) : val))
-    .min(new Date(todayISO()), "Date must be today or later")
-    .required("Required"),
-  comment: Yup.string().max(500, "Max 500 characters"),
-});
-
-export default function BookForm({ camperName, onSubmit }) {
-  const initial = { name: "", email: "", date: "", comment: "" };
-
-  const handleSubmit =
-    onSubmit ||
-    ((vals, { resetForm }) => {
-      toast.success("Booking submitted!");
-      console.log("Booking:", { camperName, ...vals });
-      resetForm();
+    const validationSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(5, 'Name must be at least 5 characters')
+            .max(25, 'Name must be maximum 25 characters')
+            .required('Name is required'),
+        
+        email: Yup.string()
+            .matches(emailRegexp, 'Invalid email')
+            .required('Email is required'),
+        
+        date: Yup.date()
+            .min(new Date(), 'Its too early')
+            .required('Date is required'),
+        
+        comment: Yup.string(),
     });
 
-  return (
-    <div className={styles.box}>
-      <h3 className={styles.title}>Book your campervan now</h3>
-      <p className={styles.sub}>
-        Stay connected! We are always ready to help you.
-      </p>
+    const initialValues = {
+        name: '',
+        email: '',
+        date: '',
+        comment: '',
+    }
 
-      <Formik
-        initialValues={initial}
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting, errors, touched }) => (
-          <Form className={styles.form} noValidate>
-            {/* Name */}
-            <label className={styles.label}>
-              <span className={styles.req}>Name*</span>
-              <Field
-                name="name"
-                placeholder="Name"
-                className={styles.input}
-                aria-describedby="err-name"
-                aria-invalid={touched.name && !!errors.name}
-                autoComplete="name"
-              />
-            </label>
-            <FormErrorMessage name="name" id="err-name" />
+    const handleSubmit = values => {
+        toast.success('Successfully booked a camper truck')
+    };
 
-            {/* Email */}
-            <label className={styles.label}>
-              <span className={styles.req}>Email*</span>
-              <Field
-                name="email"
-                type="email"
-                placeholder="Email"
-                className={styles.input}
-                aria-describedby="err-email"
-                aria-invalid={touched.email && !!errors.email}
-                autoComplete="email"
-              />
-            </label>
-            <FormErrorMessage name="email" id="err-email" />
-
-            {/* Booking date */}
-            <label className={styles.label}>
-              <span className={styles.req}>Booking date*</span>
-              <Field
-                name="date"
-                type="date"
-                className={styles.input}
-                aria-describedby="err-date"
-                aria-invalid={touched.date && !!errors.date}
-                min={todayISO()}
-              />
-            </label>
-            <FormErrorMessage name="date" id="err-date" />
-
-            {/* Comment */}
-            <label className={styles.label}>
-              <span>Comment</span>
-              <Field
-                as="textarea"
-                name="comment"
-                placeholder="Comment"
-                rows={4}
-                className={styles.textarea}
-                aria-describedby="err-comment"
-                aria-invalid={touched.comment && !!errors.comment}
-              />
-            </label>
-            <FormErrorMessage name="comment" id="err-comment" />
-
-            {/* Кнопка з UI-кіта */}
-            <Button
-              type="submit"
-              variant="primary"
-              size="md"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Sending..." : "Send"}
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </div>
-  );
+    return (
+      <div className={css.container}>
+        <h3 className={css.title}>Book your campervan now</h3>
+        <p className={css.text}>
+          Stay connected! We are always ready to help you.
+            </p>
+            <Formik initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}>
+                <Form className={css.form}>
+                    <label className={css.fieldform}>
+                        <Field id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Name"
+                            className={css.input}
+                        />
+                        <ErrorMessage name='name'
+                            component='div'
+                            className={css.errorMess} />
+                    </label>
+                    <label className={css.fieldform}>
+                        <Field
+                            id='email'
+                            name='email'
+                            type='email'
+                            placeholder='Email'
+                            className={css.input} />
+                    </label>
+                    <ErrorMessage className={css.errorMess}
+                        name='email'
+                        component='div'
+                    />
+                    <label className={css.fieldform}>
+                        <Field className={css.input}
+                            id='date'
+                            name='date'
+                            placeholder='Booking date*'
+                            type='text'
+                            onBlur={e => {
+                                e.currentTarget.type = 'text';
+                            }}
+                            onFocus={e => {
+                                e.currentTarget.type = 'date';
+                            }}
+                        />
+                        <ErrorMessage className={css.errorMess}
+                            name='date'
+                        component='div'
+                        />
+                    </label>
+                    <label className={css.fieldform}>
+                        <Field
+                            as='textarea'
+                            id='comment'
+                            name='comment'
+                            type='text'
+                            placeholder='Comment'
+                            className={css.input}
+                        />
+                        <ErrorMessage name='comment'
+                            className={css.errorMess}
+                            component='div'
+                        />
+                    </label>
+                    <Button type='submit' className={css.btn}>Send</Button>
+                </Form>
+            </Formik>
+      </div>
+    );
 }
+export default BookForm;

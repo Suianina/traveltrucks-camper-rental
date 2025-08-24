@@ -1,17 +1,26 @@
-import Modal from "../Modal/Modal";
-import s from "./ImageDetailsModal.module.css";
+import css from './ImageDetailsModal.module.css';
+import Modal from 'react-modal';
+import Icon from '../Icon/Icon.jsx';
 
-export default function ImageDetailsModal({ isOpen, onClose, src, alt }) {
-  if (!src) return null;
+Modal.setAppElement('#root');
 
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      ariaLabel="Image modal"
-      contentClassName={s.modalWide} // ширший контейнер під зображення
-    >
-      <img className={s.img} src={src} alt={alt || "Image"} />
-    </Modal>
-  );
+const ImageDetailsModal = ({ modalIsOpen, closeModal, src }) => {
+    return (
+        <Modal isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            className={css.modalContent}
+            overlayClassName={css.modalOverlay}
+            contentLabel='Image Modal' >
+            <div className={css.containerHeder}>
+                <button className={css.btn}
+                    aria-label='Close Modal Button'
+                    onClick={closeModal}>
+                    <Icon id='icon-close' width={15} height={14} className={css.icon}/>
+                </button>
+            </div>
+            <img src={src}/>
+            </Modal>
+    )
+
 }
+export default ImageDetailsModal

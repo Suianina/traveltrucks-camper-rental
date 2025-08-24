@@ -1,0 +1,60 @@
+.heroImg {
+  position: relative;
+  background-image: url(../../img/Picture.png);
+  width: 100vw;
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.container{
+  position: relative;
+  max-width: 635px;
+  height: 436px;
+  padding-top: 260px;
+  padding-left: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 0.67;
+  color: var(--inputs);
+  margin-bottom: 16px;
+}
+
+.text {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--inputs);
+  padding-bottom: 40px;
+}
+
+.btn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  border-radius: 200px;
+  width: 173px;
+  height: 56px;
+  background: var(--button);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.btn:hover,
+.btn:focus{
+    background: var(--button-hover);
+}

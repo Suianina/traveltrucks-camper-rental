@@ -1,0 +1,85 @@
+.headerCont{
+  margin-bottom: 48%;
+}
+.mainContainer {
+  padding: 64px;
+}
+
+.title {
+  line-height: 1.33;
+  margin-bottom: 8px;
+
+  color: var(--main);
+}
+
+.rating {
+  margin-bottom: 16px;
+}
+
+.listImg {
+  margin: 28px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+}
+
+.item {
+  border-radius: 10px;
+  height: 312px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.img {
+  width: 100%;
+  height: 105%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.text {
+  margin-bottom: 60px;
+}
+
+.listInfo {
+  display: flex;
+  margin-bottom: 44px;
+
+  border-bottom: 2px solid var(--gray-light);
+}
+
+.itemInfo {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+
+  padding-bottom: 24px;
+
+  margin-right: 40px;
+
+  & a {
+    color: var(--main);
+    margin: 0;
+  }
+}
+.isActive {
+  composes: itemInfo;
+  border-bottom: 5px solid var(--button);
+}
+
+.containerBooking {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.containerFeatures {
+  flex: 1;
+}
+.bookForm {
+  width: 400px;
+  flex-shrink: 0;
+}

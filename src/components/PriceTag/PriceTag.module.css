@@ -1,40 +1,7 @@
-.price {
-  font-family: var(--font-family);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--black);
-  display: inline-flex;
-  align-items: baseline;
-}
-
-.suffix {
-  font-weight: 500;
-  color: var(--gray);
-}
-
-/* Розміри */
-.md {
-  font-size: var(--font-size-base);
-}
-.lg {
-  font-size: var(--font-size-lg);
-}
-
-/* Трошки збільшуємо на великих екранах */
-@media (min-width: 1440px) {
-  .md {
-    font-size: 20px;
-  }
-  .lg {
-    font-size: 24px;
-  }
-}
-
-@media (min-width: 1800px) {
-  .md {
-    font-size: 24px;
-  }
-  .lg {
-    font-size: 28px;
-  }
+.price{
+font-weight: 600;
+font-size: 24px;
+line-height: 1.33333;
+color: var(--main);
+margin-right: 12px;
 }

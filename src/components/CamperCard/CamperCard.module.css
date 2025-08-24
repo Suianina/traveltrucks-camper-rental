@@ -1,160 +1,94 @@
-.card {
-  border: 1px solid var(--light-gray);
-  border-radius: var(--border-radius);
-  padding: var(--gap-md);
-  margin: var(--gap-sm) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-md);
-  background: var(--white);
-  font-family: var(--font-family);
+.container{
+display: flex;
+border: 1px solid var(--gray-light);
+border-radius: 20px;
+padding: 24px;
+width: 888px;
+height: 368px;
 }
 
-/* картинка в окремому контейнері, щоб зберегти співвідношення */
-.imageWrap {
-  width: 100%;
-  height: 200px;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  flex-shrink: 0;
+.wrapperForImage{
+border-radius: 10px;
+width: 100%;
+height: 320px;
+margin-right: 24px;
+position: relative;
+overflow: hidden;
 }
-.thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+
+.image{
+width: 100%;
+  height: 320px; 
+  object-fit: cover; 
   display: block;
+position: absolute;
 }
 
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-sm);
+.containerDescr{
+width: 524px;
+
 }
 
-/* top row */
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--gap-sm);
+.header{
+display: flex;
+justify-content: space-between;
+font-weight: 600;
+font-size: 24px;
+line-height: 1.3;
+color: var(--main);
+margin-bottom: 8px;
 }
-.name {
-  margin: 0;
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  color: var(--black);
+
+.title{
+font-size: 24px;
 }
-.right {
+.containerPrice{
+display: flex;
+}
+
+.icon{
+background: none;
+color: var(--main);
+padding: 0;
+}
+.icon:hover{
+color: var(--button);
+}
+.addFavorite {
+  background: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: var(--gap-sm);
+  justify-content: center;
 }
-.price {
-  font-weight: 700;
-  color: var(--black);
-  font-size: var(--font-size-base);
+.favorite{
+   color: var(--button); 
+   
 }
-
-/* meta row: rating + location */
-.metaRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--gap-sm);
-  margin: 2px 0 4px;
-}
-
-.desc {
-  margin: 0 0 var(--gap-sm);
-  color: var(--black);
-  font-size: var(--font-size-base);
-
-  display: -webkit-box;
-  /* стандартна властивість */
-  line-clamp: 2;
-  /* вебкіт-варіант для підтримки нині */
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
+.text{
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
+  width: 525px;
+  margin-bottom: 24px;
 }
 
-/* chips */
-.chips {
-  display: flex;
-  gap: var(--gap-xs);
-  flex-wrap: wrap;
-}
-.chip {
-  padding: 4px 10px;
-  border: 1px solid var(--light-gray);
-  border-radius: 999px;
-  font-size: var(--font-size-sm);
-  color: var(--black);
-  background: #f7f7f7;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-xs);
-}
 
-/* CTA */
-.moreBtn {
-  margin-top: var(--gap-sm);
-  align-self: flex-start;
-}
+.link{
+  display: block;
+  letter-spacing: -0.01em;
+  color: var(--white);
 
-/* --- breakpoints --- */
-@media only screen and (min-width: 768px) {
-  .card {
-    flex-direction: row;
-    padding: 24px 32px;
-    gap: var(--gap-md);
-  }
-  .imageWrap {
-    width: 240px;
-    height: 160px;
-    border-radius: 8px;
-  }
-  .name,
-  .price {
-    font-size: var(--font-size-lg);
-  }
-}
+  padding: 16px;
+  border-radius: 200px;
+  width: 166px;
 
-@media only screen and (min-width: 1440px) {
-  .card {
-    padding: 32px 108px;
-    gap: var(--gap-lg);
-  }
-  .imageWrap {
-    width: 320px;
-    height: 220px;
-    border-radius: 16px;
-  }
-  .name,
-  .price {
-    font-size: 24px;
-  }
-  .reviews {
-    font-size: 18px;
-  }
+  text-align: center;
+  background-color: var(--button);
 }
-
-@media only screen and (min-width: 1800px) {
-  .card {
-    padding: 48px 180px;
-    gap: 48px;
-  }
-  .imageWrap {
-    width: 420px;
-    height: 320px;
-    border-radius: 24px;
-  }
-  .name,
-  .price {
-    font-size: 32px;
-  }
-  .reviews {
-    font-size: 22px;
-  }
+.link:hover {
+  background-color: var(--button-hover);
 }
