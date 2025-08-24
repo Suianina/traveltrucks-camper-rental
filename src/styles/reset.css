@@ -31,7 +31,6 @@ button {
 }
 body {
   margin: 0;
-  font-family: var(--font-family);
 }
 input:focus,
 input:focus-visible,
