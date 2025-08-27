@@ -71,9 +71,9 @@ const BookForm = ({ className = "" }) => {
         minDate={new Date()}
         placeholderText="Booking date*"
         locale="en"
-        className={css.input}
-        aria-label="Booking date"
         dateFormat="MMMM d, yyyy"
+        className={`${css.input} ${css.datePicker}`} // додай className
+        aria-label="Booking date"
       />
 
       <textarea

@@ -91,13 +91,13 @@
 }
 
 .containerFeatures {
+  /* flex: 1 1 0;
+  max-width: calc(100% - 671px); */
   flex: 1;
-  min-width: 0;
 }
 
 .bookForm {
-  /* flex: 0 0 631px;
-  width: 631px; */
-  flex: 0 0 auto;
-  margin-left: 40px;
+  /* margin-left: 40px; */
+  width: 631px;
+  flex-shrink: 0;
 }

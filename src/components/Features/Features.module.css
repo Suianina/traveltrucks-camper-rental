@@ -21,8 +21,9 @@
 }
 
 .list {
-  width: 527px;
-  height: 224px;
+  /* width: 527px;
+  height: 224px; */
+  width: 100%;
 }
 
 .list li {

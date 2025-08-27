@@ -9,7 +9,7 @@
 } */
 
 .wrap {
-  width: 631px;
+  width: 641px;
   height: 588px;
   padding: 44px;
   border: 1px solid var(--gray-light);
@@ -22,7 +22,7 @@
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 20px;
-  line-height: 120%;
+  line-height: 1.2;
   color: var(--main);
   margin-bottom: 8px;
 }
@@ -31,10 +31,10 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
-  line-height: 150%;
+  line-height: 1.5;
   color: var(--gray);
   margin-bottom: 24px;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 
 /* .input {
@@ -107,6 +107,15 @@
   resize: none;
 }
 
+.errorMess {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.29;
+  color: var(--button);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
 .submit {
   display: block;
   margin: 24px auto 44px;
@@ -136,5 +145,19 @@
 }
 
 .datePicker {
-  width: 100%;
+  width: 100% !important;
+  height: 60px;
+  border: none;
+  border-radius: 12px;
+  background: var(--inputs);
+  padding: 18px;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--main);
+
+  margin-bottom: 14px;
+  box-sizing: border-box;
 }
