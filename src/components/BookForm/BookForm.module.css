@@ -1,56 +1,100 @@
-.wrap {
+/* .wrap {
   border: 1px solid var(--gray-light);
   border-radius: 10px;
-  padding: 24px;
-  background: var(--inputs);
+  padding: 44px;
+  /* width: 641px; */
+/* background: var(--white);
+
+  height: 588px;
+} */
+
+.wrap {
+  width: 100%;
+  max-width: 400px;
+  height: 588px;
+  padding: 44px;
+
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  background: var(--white);
+
+  box-sizing: border-box;
 }
 
 .title {
+  font-family: var(--font-family);
   font-weight: 600;
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 120%;
   color: var(--main);
   margin-bottom: 8px;
 }
 
 .subtitle {
-  color: var(--text);
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--gray);
   margin-bottom: 24px;
-  font-size: 14px;
+  margin-top: 8px;
 }
 
 .input {
-  width: 100%;
+  width: 527px;
+  height: 60px;
   border: none;
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--inputs);
+
+  padding: 18px 337px 18px 18px;
+
+  font-family: var(--font-family);
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   color: var(--main);
+
   margin-bottom: 14px;
 }
 
 .textarea {
-  min-height: 114px;
-  resize: vertical;
+  width: 527px;
+  height: 118px;
+  border: none;
+  border-radius: 10px;
+  background: var(--inputs);
+
+  padding: 18px 308px 76px 18px;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gray);
+
+  resize: none;
 }
 
 .submit {
   display: block;
-  margin: 24px auto 0;
-  border-radius: 200px;
+  margin: 24px auto 44px;
   width: 166px;
   height: 56px;
+  padding: 16px 60px;
+  border: none;
+  border-radius: 200px;
+
   background: var(--button);
   color: var(--white);
+
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 150%;
   letter-spacing: -0.01em;
+
   text-align: center;
-  border: none;
   cursor: pointer;
   transition: background 0.2s ease;
 }

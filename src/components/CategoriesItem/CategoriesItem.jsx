@@ -3,25 +3,61 @@ import css from "./CategoriesItem.module.css";
 
 const CategoriesItem = ({ camper }) => {
   return (
-    <div className={css.container}>
-      <CategoriesList icon="icon-diagram" text={camper.transmission} />
+    <ul className={css.container}>
+      <li>
+        <CategoriesList icon="icon-diagram" text={camper.transmission} />
+      </li>
       {camper.engine && (
-        <CategoriesList icon="icon-Patrol" text={camper.engine} />
+        <li>
+          <CategoriesList icon="icon-Patrol" text={camper.engine} />
+        </li>
       )}
-      {camper.kitchen && <CategoriesList icon="icon-kitchen" text="Kitchen" />}
-      {camper.AC && <CategoriesList icon="icon-AC" text="AC" />}
-      {camper.radio && <CategoriesList icon="icon-radios" text="Radio" />}
-      {camper.TV && <CategoriesList icon="icon-tv" text="TV" />}
+      {camper.kitchen && (
+        <li>
+          <CategoriesList icon="icon-kitchen" text="Kitchen" />
+        </li>
+      )}
+      {camper.AC && (
+        <li>
+          <CategoriesList icon="icon-AC" text="AC" />
+        </li>
+      )}
+      {camper.radio && (
+        <li>
+          <CategoriesList icon="icon-radios" text="Radio" />
+        </li>
+      )}
+      {camper.TV && (
+        <li>
+          <CategoriesList icon="icon-tv" text="TV" />
+        </li>
+      )}
       {camper.refrigerator && (
-        <CategoriesList icon="icon_fridge" text="Refrigerator" />
+        <li>
+          <CategoriesList icon="icon_fridge" text="Refrigerator" />
+        </li>
       )}
       {camper.microwave && (
-        <CategoriesList icon="icon_microwave" text="Microwave" />
+        <li>
+          <CategoriesList icon="icon_microwave" text="Microwave" />
+        </li>
       )}
-      {camper.bathroom && <CategoriesList icon="icon_shower" text="Bathroom" />}
-      {camper.water && <CategoriesList icon="icon_water" text="Water" />}
-      {camper.gas && <CategoriesList icon="icon_gas" text="Gas" />}
-    </div>
+      {camper.bathroom && (
+        <li>
+          <CategoriesList icon="icon_shower" text="Bathroom" />
+        </li>
+      )}
+      {camper.water && (
+        <li>
+          <CategoriesList icon="icon_water" text="Water" />
+        </li>
+      )}
+      {camper.gas && (
+        <li>
+          <CategoriesList icon="icon_gas" text="Gas" />
+        </li>
+      )}
+    </ul>
   );
 };
 export default CategoriesItem;

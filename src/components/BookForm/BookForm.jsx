@@ -2,13 +2,17 @@ import { useState } from "react";
 import css from "./BookForm.module.css";
 import { toast } from "react-hot-toast";
 
-const todayISO = () => new Date().toISOString().split("T")[0];
+import DatePicker, { registerLocale } from "react-datepicker";
+import enUS from "date-fns/locale/en-US";
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("en", enUS);
 
 const BookForm = ({ className = "" }) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    date: "",
+    date: null,
     comment: "",
   });
 
@@ -25,10 +29,15 @@ const BookForm = ({ className = "" }) => {
       return toast.error("Enter a valid email");
     if (!form.date) return toast.error("Pick a booking date");
 
-    console.log("BOOKING REQUEST:", form);
+    const dataToSend = {
+      ...form,
+      date: form.date.toISOString().split("T")[0],
+    };
+
+    console.log("BOOKING REQUEST:", dataToSend);
 
     toast.success("Booking request sent!");
-    setForm({ name: "", email: "", date: "", comment: "" });
+    setForm({ name: "", email: "", date: null, comment: "" });
   };
 
   return (
@@ -56,14 +65,15 @@ const BookForm = ({ className = "" }) => {
         onChange={onChange}
       />
 
-      <input
+      <DatePicker
+        selected={form.date}
+        onChange={(date) => setForm((s) => ({ ...s, date }))}
+        minDate={new Date()}
+        placeholderText="Booking date*"
+        locale="en"
         className={css.input}
-        type="date"
-        name="date"
-        placeholder="ДД.ММ.РРРР"
-        min={todayISO()}
-        value={form.date}
-        onChange={onChange}
+        aria-label="Booking date"
+        dateFormat="MMMM d, yyyy"
       />
 
       <textarea

@@ -24,9 +24,9 @@ const CamperCard = ({ camper }) => {
   const handleClick = () => {
     if (isFavorite) {
       dispatch(deleteFromFavorite(camper.id));
-      return;
+    } else {
+      dispatch(addToFavorite(camper));
     }
-    dispatch(addToFavorite(camper));
   };
 
   const thumb = camper?.gallery?.[0]?.thumb || imgDefault;

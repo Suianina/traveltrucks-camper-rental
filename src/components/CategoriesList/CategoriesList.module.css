@@ -1,28 +1,29 @@
-.container{
-display: flex;
+.container {
+  display: flex;
   align-items: center;
   border-radius: 100px;
   padding: 12px 18px;
-  width: auto; 
-  max-width: 100%; 
-  background: var(--badges);
-  margin-bottom: 8px;
+  width: auto;
+  max-width: 100%;
+  background: #f2f4f7;
+  /* margin-bottom: 8px; */
+  mix-blend-mode: multiply;
 }
 
-.container:hover{
+.container:hover {
   background: var(--gray-light);
 }
 
-.icon{
-margin-right: 8px;
+.icon {
+  margin-right: 8px;
 }
 
-.text{
-font-weight: 500;
-font-size: 16px;
-line-height: 1.5;
-text-align: center;
-color: var(--main); 
+.text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--main);
 }
 
 .text::first-letter {

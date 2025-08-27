@@ -8,23 +8,26 @@
 
 .title {
   margin-top: 100px;
-  padding-bottom: 24px;
   margin-bottom: 24px;
+  padding-bottom: 24px;
 
   border-bottom: 1px solid var(--gray-light);
 
+  font-family: var(--font-family);
   font-weight: 600;
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 120%;
   color: var(--main);
 }
 
 .list {
-    & li {
-    display: flex;
-    justify-content: space-between;
+  width: 527px;
+  height: 224px;
+}
 
-    color: var(--main);
-    margin-bottom: 16px;
-  }
+.list li {
+  display: flex;
+  justify-content: space-between;
+  color: var(--main);
+  margin-bottom: 16px;
 }
