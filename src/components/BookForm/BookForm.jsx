@@ -77,7 +77,7 @@ const BookForm = ({ className = "" }) => {
       />
 
       <textarea
-        className={`${css.input} ${css.textarea}`}
+        className={`${css.textarea}`}
         name="comment"
         placeholder="Comment"
         value={form.comment}

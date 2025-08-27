@@ -4,8 +4,8 @@
 
 .mainContainer {
   max-width: 1312px;
-  margin: 0 auto; 
-  padding: 64px; 
+  margin: 0 auto;
+  padding: 64px;
 }
 
 .title {
@@ -92,10 +92,12 @@
 
 .containerFeatures {
   flex: 1;
-  min-width: 0; 
+  min-width: 0;
 }
 
 .bookForm {
-  flex: 0 0 400px;
-  width: 400px;
+  /* flex: 0 0 631px;
+  width: 631px; */
+  flex: 0 0 auto;
+  margin-left: 40px;
 }
