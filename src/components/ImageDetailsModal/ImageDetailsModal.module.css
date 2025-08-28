@@ -15,20 +15,18 @@
   z-index: 1000;
 }
 
-.containerHeder{
- display: flex;
+.containerHeder {
+  display: flex;
   margin-bottom: 24px;
   flex-direction: row-reverse;
 }
 
-.btn{
+.btn {
   padding: 6px;
   background: none;
   cursor: pointer;
-
   stroke: var(--main);
-
   & :hover {
     stroke: var(--text);
-  }  
+  }
 }

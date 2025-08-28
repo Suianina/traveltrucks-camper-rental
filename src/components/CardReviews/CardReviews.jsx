@@ -20,12 +20,12 @@ const CardReview = ({ info }) => {
   };
 
   return (
-    <div>
+    <div className={css.reviewItem}>
       <div className={css.container}>
         <span className={css.avatar}>{info.reviewer_name[0]}</span>
         <div>
           <p className={css.name}>{info.reviewer_name}</p>
-          <ul className={css.list}>{ratingStar(info.reviewer_rating)} </ul>
+          <ul className={css.list}>{ratingStar(info.reviewer_rating)}</ul>
         </div>
       </div>
       <p>{info.comment}</p>

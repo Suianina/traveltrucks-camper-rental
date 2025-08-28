@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-
 import CamperReview from "./components/CamperReview/CamperReview";
 import Features from "./components/Features/Features";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";

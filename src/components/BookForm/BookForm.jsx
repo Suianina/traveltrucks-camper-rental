@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import DatePicker from "react-datepicker";
@@ -29,26 +29,39 @@ const BookForm = ({ className = "" }) => {
     comment: "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    const dataToSend = {
-      ...values,
-      date: values.date.toISOString().split("T")[0],
-    };
-
-    console.log("BOOKING REQUEST:", dataToSend);
-    toast.success("Booking request sent!");
-    resetForm();
-    setSelectedDate(null);
-  };
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      validateOnBlur={false}
+      validateOnChange={false}
+      onSubmit={(values, { resetForm }) => {
+        const dataToSend = {
+          ...values,
+          date: values.date.toISOString().split("T")[0],
+        };
+
+        console.log("BOOKING REQUEST:", dataToSend);
+        toast.success("Booking request sent!");
+        resetForm();
+        setSelectedDate(null);
+      }}
     >
-      {({ setFieldValue }) => (
-        <Form className={`${css.wrap} ${className}`} noValidate>
+      {({ setFieldValue, validateForm, handleSubmit }) => (
+        <Form
+          className={`${css.wrap} ${className}`}
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            validateForm().then((errors) => {
+              if (Object.keys(errors).length > 0) {
+                toast.error("Please fill all required fields");
+              } else {
+                handleSubmit(e);
+              }
+            });
+          }}
+        >
           <h3 className={css.title}>Book your campervan now</h3>
           <p className={css.subtitle}>
             Stay connected! We are always ready to help you.

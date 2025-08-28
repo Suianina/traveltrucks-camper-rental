@@ -59,9 +59,9 @@ const Filters = () => {
       if (v !== false && v !== "") params.set(k, v);
     });
 
-    const queryString = params.toString(); // '' якщо нічого не обрано
+    const queryString = params.toString();
     dispatch(changeFilter(queryString));
-    dispatch(clearItems()); // скидає список і page=1
+    dispatch(clearItems());
   };
 
   return (

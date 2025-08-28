@@ -10,16 +10,17 @@
   font-size: 24px;
   line-height: 1.33;
   color: var(--button);
-
   padding: 13px 21px;
   margin-right: 16px;
-
   border-radius: 60px;
-
   background: var(--badges);
 }
 
 .name {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--main);
   margin-bottom: 4px;
 }
@@ -37,4 +38,13 @@
 
 .starDisable {
   fill: var(--badges);
+}
+
+.reviewItem {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 44px;
 }

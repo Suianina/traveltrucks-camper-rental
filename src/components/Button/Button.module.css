@@ -1,19 +1,19 @@
-.btn{
-border-radius: 200px;
-padding: 16px 60px;
-width: 166px;
-height: 56px;
-background: var(--button);
+.btn {
+  border-radius: 200px;
+  padding: 16px 60px;
+  width: 166px;
+  height: 56px;
+  background: var(--button);
 
-font-family: var(--font-family);
-font-weight: 500;
-font-size: 16px;
-line-height: 1.5;
-letter-spacing: -0.01em;
-color: var(--white);
-transition: background 0.3s ease;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  transition: background 0.3s ease;
 }
 
-.btn:hover{
-    background: var(--button-hover);
+.btn:hover {
+  background: var(--button-hover);
 }
