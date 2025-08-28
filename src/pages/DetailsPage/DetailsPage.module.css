@@ -1,11 +1,17 @@
 .headerCont {
   margin-bottom: 0;
 }
-
+/* 
 .mainContainer {
   max-width: 1312px;
   margin: 0 auto;
   padding: 64px 80px;
+} */
+.mainContainer {
+  max-width: 1312px;
+  margin: 0 auto;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
 
 .title {
@@ -17,11 +23,18 @@
 .rating {
   margin-bottom: 16px;
 }
-
+/* 
 .listImg {
   margin: 28px 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+} */
+
+.listImg {
+  margin: 28px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 48px;
 }
 

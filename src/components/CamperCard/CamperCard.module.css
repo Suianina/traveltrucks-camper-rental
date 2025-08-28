@@ -1,59 +1,57 @@
-.container{
-display: flex;
-border: 1px solid var(--gray-light);
-border-radius: 20px;
-padding: 24px;
-width: 888px;
-height: 368px;
+.container {
+  display: flex;
+  border: 1px solid var(--gray-light);
+  border-radius: 20px;
+  padding: 24px;
+  width: 888px;
+  height: 368px;
 }
 
-.wrapperForImage{
-border-radius: 10px;
-width: 100%;
-height: 320px;
-margin-right: 24px;
-position: relative;
-overflow: hidden;
+.wrapperForImage {
+  border-radius: 10px;
+  width: 100%;
+  height: 320px;
+  margin-right: 24px;
+  position: relative;
+  overflow: hidden;
 }
 
-.image{
-width: 100%;
-  height: 320px; 
-  object-fit: cover; 
+.image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
   display: block;
-position: absolute;
+  position: absolute;
 }
 
-.containerDescr{
-width: 524px;
-
+.containerDescr {
+  width: 524px;
 }
 
-.header{
-display: flex;
-justify-content: space-between;
-font-weight: 600;
-font-size: 24px;
-line-height: 1.3;
-color: var(--main);
-margin-bottom: 8px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--main);
+  margin-bottom: 8px;
 }
 
-.title{
-font-size: 24px;
+.title {
+  font-size: 24px;
 }
-.containerPrice{
-display: flex;
+.containerPrice {
+  display: flex;
 }
 
-.icon{
-background: none;
-color: var(--main);
-padding: 0;
+.icon {
+  background: none;
+  color: var(--main);
+  padding: 0;
+  transition: color 0.3s ease;
 }
-.icon:hover{
-color: var(--button);
-}
+
 .addFavorite {
   background: none;
   background-color: transparent;
@@ -64,11 +62,20 @@ color: var(--button);
   align-items: center;
   justify-content: center;
 }
-.favorite{
-   color: var(--button); 
-   
+
+.favorite {
+  color: var(--button);
 }
-.text{
+
+.addFavorite:not(.favorite):hover .icon {
+  color: var(--button);
+}
+
+.favorite .icon {
+  color: var(--button);
+}
+
+.text {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -76,8 +83,7 @@ color: var(--button);
   margin-bottom: 24px;
 }
 
-
-.link{
+.link {
   display: block;
   letter-spacing: -0.01em;
   color: var(--white);
@@ -89,6 +95,7 @@ color: var(--button);
   text-align: center;
   background-color: var(--button);
 }
+
 .link:hover {
   background-color: var(--button-hover);
 }

@@ -60,18 +60,12 @@ const BookForm = ({ className = "" }) => {
             placeholder="Name*"
             className={css.input}
           />
-          <ErrorMessage name="name" component="div" className={css.errorMess} />
 
           <Field
             name="email"
             type="email"
             placeholder="Email*"
             className={css.input}
-          />
-          <ErrorMessage
-            name="email"
-            component="div"
-            className={css.errorMess}
           />
 
           <div className={css.dateWrapper}>
@@ -87,11 +81,6 @@ const BookForm = ({ className = "" }) => {
               className={css.input}
               wrapperClassName={css.dateWrapper}
             />
-            <ErrorMessage
-              name="date"
-              component="div"
-              className={css.errorMess}
-            />
           </div>
 
           <Field
@@ -99,11 +88,6 @@ const BookForm = ({ className = "" }) => {
             name="comment"
             placeholder="Comment"
             className={css.textarea}
-          />
-          <ErrorMessage
-            name="comment"
-            component="div"
-            className={css.errorMess}
           />
 
           <button type="submit" className={css.submit}>

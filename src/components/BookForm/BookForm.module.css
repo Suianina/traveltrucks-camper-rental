@@ -59,15 +59,6 @@
   resize: none;
 }
 
-.errorMess {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.29;
-  color: var(--button);
-  margin-bottom: 10px;
-  text-align: left;
-}
-
 .submit {
   display: block;
   margin: 24px auto 44px;
