@@ -1,93 +1,117 @@
-import { useState } from "react";
-import css from "./BookForm.module.css";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import { toast } from "react-hot-toast";
-
-import DatePicker, { registerLocale } from "react-datepicker";
-import enUS from "date-fns/locale/en-US";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-registerLocale("en", enUS);
+import { useState } from "react";
+import css from "./BookForm.module.css";
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Name must be at least 3 characters")
+    .max(25, "Name must be max 25 characters")
+    .required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  date: Yup.date()
+    .min(new Date(), "Booking date must be in the future")
+    .required("Booking date is required"),
+  comment: Yup.string(),
+});
 
 const BookForm = ({ className = "" }) => {
-  const [form, setForm] = useState({
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const initialValues = {
     name: "",
     email: "",
     date: null,
     comment: "",
-  });
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setForm((s) => ({ ...s, [name]: value }));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (!form.name.trim()) return toast.error("Enter your name");
-    if (!/^\S+@\S+\.\S+$/.test(form.email))
-      return toast.error("Enter a valid email");
-    if (!form.date) return toast.error("Pick a booking date");
-
+  const handleSubmit = (values, { resetForm }) => {
     const dataToSend = {
-      ...form,
-      date: form.date.toISOString().split("T")[0],
+      ...values,
+      date: values.date.toISOString().split("T")[0],
     };
 
     console.log("BOOKING REQUEST:", dataToSend);
-
     toast.success("Booking request sent!");
-    setForm({ name: "", email: "", date: null, comment: "" });
+    resetForm();
+    setSelectedDate(null);
   };
 
   return (
-    <form className={`${css.wrap} ${className}`} onSubmit={onSubmit} noValidate>
-      <h3 className={css.title}>Book your campervan now</h3>
-      <p className={css.subtitle}>
-        Stay connected! We are always ready to help you.
-      </p>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ setFieldValue }) => (
+        <Form className={`${css.wrap} ${className}`} noValidate>
+          <h3 className={css.title}>Book your campervan now</h3>
+          <p className={css.subtitle}>
+            Stay connected! We are always ready to help you.
+          </p>
 
-      <input
-        className={css.input}
-        type="text"
-        name="name"
-        placeholder="Name*"
-        value={form.name}
-        onChange={onChange}
-      />
+          <Field
+            name="name"
+            type="text"
+            placeholder="Name*"
+            className={css.input}
+          />
+          <ErrorMessage name="name" component="div" className={css.errorMess} />
 
-      <input
-        className={css.input}
-        type="email"
-        name="email"
-        placeholder="Email*"
-        value={form.email}
-        onChange={onChange}
-      />
+          <Field
+            name="email"
+            type="email"
+            placeholder="Email*"
+            className={css.input}
+          />
+          <ErrorMessage
+            name="email"
+            component="div"
+            className={css.errorMess}
+          />
 
-      <DatePicker
-        selected={form.date}
-        onChange={(date) => setForm((s) => ({ ...s, date }))}
-        minDate={new Date()}
-        placeholderText="Booking date*"
-        locale="en"
-        dateFormat="MMMM d, yyyy"
-        className={`${css.input} ${css.datePicker}`} // додай className
-        aria-label="Booking date"
-      />
+          <div className={css.dateWrapper}>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => {
+                setSelectedDate(date);
+                setFieldValue("date", date);
+              }}
+              minDate={new Date()}
+              placeholderText="Booking date*"
+              dateFormat="MMMM d, yyyy"
+              className={css.input}
+              wrapperClassName={css.dateWrapper}
+            />
+            <ErrorMessage
+              name="date"
+              component="div"
+              className={css.errorMess}
+            />
+          </div>
 
-      <textarea
-        className={`${css.textarea}`}
-        name="comment"
-        placeholder="Comment"
-        value={form.comment}
-        onChange={onChange}
-      />
+          <Field
+            as="textarea"
+            name="comment"
+            placeholder="Comment"
+            className={css.textarea}
+          />
+          <ErrorMessage
+            name="comment"
+            component="div"
+            className={css.errorMess}
+          />
 
-      <button type="submit" className={css.submit}>
-        Send
-      </button>
-    </form>
+          <button type="submit" className={css.submit}>
+            Send
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

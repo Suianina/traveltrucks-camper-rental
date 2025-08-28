@@ -1,7 +1,7 @@
 .container {
   border-radius: 10px;
-  padding: 44px 80px;
-  width: 631px;
+  padding: 44px;
+  width: 570px;
   height: 588px;
   background: var(--inputs);
 }
@@ -21,8 +21,6 @@
 }
 
 .list {
-  /* width: 527px;
-  height: 224px; */
   width: 100%;
 }
 

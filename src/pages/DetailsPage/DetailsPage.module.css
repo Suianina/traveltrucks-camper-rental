@@ -5,7 +5,7 @@
 .mainContainer {
   max-width: 1312px;
   margin: 0 auto;
-  padding: 64px;
+  padding: 64px 80px;
 }
 
 .title {
@@ -86,18 +86,11 @@
 
 .containerBooking {
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
 }
 
 .containerFeatures {
-  /* flex: 1 1 0;
-  max-width: calc(100% - 671px); */
   flex: 1;
-}
-
-.bookForm {
-  /* margin-left: 40px; */
-  width: 631px;
-  flex-shrink: 0;
 }
